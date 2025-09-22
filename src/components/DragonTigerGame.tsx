@@ -1,9 +1,9 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import casinoTable from "@/assets/casino-table.png";
-import chipsImage from "@/assets/casino-chips-hd.png";
-import tigerCard from "@/assets/tiger-betting-card-hd.png";
-import dragonCard from "@/assets/dragon-betting-card-hd.png";
+import chipsImage from "@/assets/chips-hd.png";
+import tigerCard from "@/assets/tiger-card-hd.png";
+import dragonCard from "@/assets/dragon-card-hd.png";
 
 const DragonTigerGame = () => {
   // Mock betting history data
@@ -127,13 +127,14 @@ const DragonTigerGame = () => {
           {chipValues.map((value, index) => (
             <div
               key={value}
-              className="relative w-16 h-16 cursor-pointer transition-all duration-300 hover:scale-110"
+              className="relative w-16 h-16 cursor-pointer transition-all duration-300 hover:scale-110 rounded-full overflow-hidden"
               style={{
                 backgroundImage: `url(${chipsImage})`,
-                backgroundPosition: `${-index * 256}px 0px`,
-                backgroundSize: '1536px 512px',
+                backgroundPosition: `${-index * 256}px center`,
+                backgroundSize: '1536px auto',
                 backgroundRepeat: 'no-repeat'
               }}
+              title={`${value >= 1000 ? `${value / 1000}k` : value}`}
             />
           ))}
         </div>
