@@ -1,9 +1,9 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import casinoTable from "@/assets/casino-table.png";
-import chipsImage from "@/assets/chips.png";
-import tigerCard from "@/assets/tiger-card.png";
-import dragonCard from "@/assets/dragon-card.png";
+import chipsImage from "@/assets/casino-chips-hd.png";
+import tigerCard from "@/assets/tiger-betting-card-hd.png";
+import dragonCard from "@/assets/dragon-betting-card-hd.png";
 
 const DragonTigerGame = () => {
   // Mock betting history data
@@ -130,8 +130,8 @@ const DragonTigerGame = () => {
               className="relative w-16 h-16 cursor-pointer transition-all duration-300 hover:scale-110"
               style={{
                 backgroundImage: `url(${chipsImage})`,
-                backgroundPosition: `${-index * 80}px 0px`,
-                backgroundSize: '480px 80px',
+                backgroundPosition: `${-index * 256}px 0px`,
+                backgroundSize: '1536px 512px',
                 backgroundRepeat: 'no-repeat'
               }}
             />
