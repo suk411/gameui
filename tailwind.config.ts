@@ -47,6 +47,26 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        dragon: {
+          DEFAULT: "hsl(var(--dragon))",
+          foreground: "hsl(var(--dragon-foreground))",
+          glow: "hsl(var(--dragon-glow))",
+        },
+        tiger: {
+          DEFAULT: "hsl(var(--tiger))",
+          foreground: "hsl(var(--tiger-foreground))",
+          glow: "hsl(var(--tiger-glow))",
+        },
+        gold: {
+          DEFAULT: "hsl(var(--gold))",
+          foreground: "hsl(var(--gold-foreground))",
+          glow: "hsl(var(--gold-glow))",
+        },
+        mystical: {
+          glow: "hsl(var(--mystical-glow))",
+        },
+        "betting-area": "hsl(var(--betting-area))",
+        "chip-border": "hsl(var(--chip-border))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
