@@ -1,146 +1,89 @@
-import React from "react";
-import { Button } from "@/components/ui/button";
-import casinoTable from "@/assets/casino-table.png";
-import chipsImage from "@/assets/chips-hd.png";
-import tigerCard from "@/assets/tiger-card-hd.png";
-import dragonCard from "@/assets/dragon-card-hd.png";
+import React, { useState } from "react";
+import casinoTable from '../assets/casino-table.png';
+import { GoPersonFill } from "react-icons/go";
 
-const DragonTigerGame = () => {
-  // Mock betting history data
-  const bettingHistory = [
-    { type: "T", color: "bg-gold" },
-    { type: "T", color: "bg-tiger" },
-    { type: "T", color: "bg-tiger" },
-    { type: "D", color: "bg-dragon" },
-    { type: "T", color: "bg-tiger" },
-    { type: "D", color: "bg-dragon" },
-    { type: "T", color: "bg-tiger" },
-    { type: "T", color: "bg-tiger" },
-    { type: "D", color: "bg-dragon" },
-    { type: "T", color: "bg-tiger" },
-    { type: "D", color: "bg-dragon" },
-  ];
+import chip10 from "../assets/chip-10.png";
+import chip50 from "../assets/chip-50.png";
+import chip100 from "../assets/chip-100.png";
+import chip500 from "../assets/chip-500.png";
+import chip10k from "../assets/chip-10k.png";
 
-  const chipValues = [10, 50, 100, 500, 1000, 10000];
-  
-  const chipColors = [
-    "from-tiger to-tiger-glow",
-    "from-emerald-500 to-emerald-400",
-    "from-dragon to-dragon-glow",
-    "from-purple-600 to-purple-400",
-    "from-red-600 to-red-400",
-    "from-slate-700 to-slate-500"
+export default function MyComponent() {
+  const [selectedChip, setSelectedChip] = useState(null);
+
+  const chips = [
+    { id: 10, src: chip10, alt: "10" },
+    { id: 50, src: chip50, alt: "50" },
+    { id: 100, src: chip100, alt: "100" },
+    { id: 500, src: chip500, alt: "500" },
+    { id: 10000, src: chip10k, alt: "10k" },
   ];
 
   return (
-    <div 
-      className="min-h-screen w-full relative overflow-hidden bg-cover bg-center bg-no-repeat flex flex-col"
-      style={{ 
-        backgroundImage: `url(${casinoTable})`,
-        backgroundAttachment: 'fixed'
-      }}
-    >
-      {/* Mystical overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/40 to-background/60" />
-      
-      {/* Top section with dealer and dragons */}
-      <div className="relative z-10 flex-1 flex flex-col items-center pt-4 px-4">
-        
-        {/* Timer and status bar */}
-        <div className="w-full max-w-md mb-4">
-          <div className="flex items-center justify-between bg-card/80 backdrop-blur-sm rounded-2xl p-3 border border-border">
-            <div className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-gold rounded-full flex items-center justify-center border-2 border-gold-glow">
-                <span className="text-lg font-bold text-gold-foreground">2</span>
-              </div>
-              <span className="text-sm font-medium text-foreground">Draw Time</span>
-            </div>
-            <div className="text-sm font-medium text-muted-foreground">Last</div>
-            <div className="w-8 h-8 bg-gold/20 rounded-lg flex items-center justify-center">
-              <div className="w-4 h-4 bg-gold rounded-sm" />
-            </div>
-          </div>
-        </div>
+    <>
+      <style>
+        {`
+          @keyframes pulseScale {
+            0%, 100% { transform: scale(1.03); box-shadow: 0 0 2px 2px #FFD700; }
+            50% { transform: scale(1.08); box-shadow: 0 0 3px 4px #FFD700; }
+          }
+          .pulse-zoom {
+            animation: pulseScale 1s ease-in-out infinite;
+            border-radius: 9999px;
+            border: 2px solid #FFD700;
+          }
+        `}
+      </style>
+      <div className="min-h-screen flex justify-center bg-black" style={{ overflowX: 'hidden', height: '100vh', width: '100vw' }}>
+        {/* Container with max width aligned to background image */}
+        <div
+          className="w-full max-w-md flex flex-col justify-between"
+          style={{
+            height: '100%', 
+            backgroundImage: `url(${casinoTable})`,
+            backgroundSize: 'contain',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'top center',
+          }}
+        >
+          {/* Spacer for content above or place actual game UI here if needed */}
+          <div className="flex-grow" />
 
-        {/* Betting history */}
-        <div className="flex gap-1 mb-6">
-          {bettingHistory.map((bet, index) => (
+          {/* Chip bar container attached to background width */}
+          <div>
             <div
-              key={index}
-              className={`w-7 h-7 rounded-lg ${bet.color} flex items-center justify-center border border-border shadow-sm`}
-            >
-              <span className="text-xs font-bold text-white">{bet.type}</span>
-            </div>
-          ))}
-        </div>
-
-        {/* Dealer section - now part of background */}
-        <div className="relative mb-6">
-          <div className="h-20" /> {/* Spacer for dealer area */}
-        </div>
-
-        {/* TIE betting area */}
-        <div className="w-full max-w-sm mb-4">
-          <Button 
-            variant="default"
-            size="lg"
-            className="w-full h-16 bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-lg rounded-2xl border-2 border-ring shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105"
-          >
-            <div className="flex flex-col items-center">
-              <div className="text-xs opacity-80">TIE X10</div>
-              <div>Click to play</div>
-            </div>
-          </Button>
-        </div>
-
-        {/* Dragon vs Tiger betting cards */}
-        <div className="flex gap-4 mb-6 w-full max-w-sm">
-          {/* Dragon */}
-          <div className="flex-1 relative cursor-pointer transition-all duration-300 hover:scale-105">
-            <img 
-              src={dragonCard} 
-              alt="Dragon betting card" 
-              className="w-full h-auto object-contain"
-            />
-          </div>
-
-          {/* Tiger */}
-          <div className="flex-1 relative cursor-pointer transition-all duration-300 hover:scale-105">
-            <img 
-              src={tigerCard} 
-              alt="Tiger betting card" 
-              className="w-full h-auto object-contain"
-            />
-          </div>
-        </div>
-
-        {/* User info */}
-        <div className="flex items-center gap-2 mb-4">
-          <div className="w-8 h-8 bg-gold rounded-full border-2 border-gold-glow flex items-center justify-center">
-            <span className="text-xs font-bold text-gold-foreground">P</span>
-          </div>
-          <span className="text-lg font-bold text-gold">1.7</span>
-        </div>
-
-        {/* Betting chips */}
-        <div className="flex flex-wrap gap-2 justify-center max-w-sm">
-          {chipValues.map((value, index) => (
-            <div
-              key={value}
-              className="relative w-16 h-16 cursor-pointer transition-all duration-300 hover:scale-110 rounded-full overflow-hidden"
               style={{
-                backgroundImage: `url(${chipsImage})`,
-                backgroundPosition: `${-index * 256}px center`,
-                backgroundSize: '1536px auto',
-                backgroundRepeat: 'no-repeat'
+                height: '6px',
+                background: 'linear-gradient(90deg, #8b5a2b, #a97453, #8b5a2b)',
+                boxShadow: '0 2px 6px rgba(0,0,0,0.5)',
               }}
-              title={`${value >= 1000 ? `${value / 1000}k` : value}`}
             />
-          ))}
+            <div className="flex flex-col items-center bg-black px-4 py-3 rounded-t-none shadow-inner w-full border-t border-[#8b5a2b]">
+              <div className="flex items-center mb-2 space-x-3">
+                <GoPersonFill
+                  size={32}
+                  color="white"
+                  style={{ borderRadius: "50%", border: "4px solid #2b0d0d", backgroundColor: "#2b0d0d" }}
+                />
+                <span className="text-white text-base font-semibold">1.7</span>
+              </div>
+              <div className="flex gap-4">
+                {chips.map((chip) => (
+                  <img
+                    key={chip.id}
+                    src={chip.src}
+                    alt={chip.alt}
+                    className={`w-12 h-12 cursor-pointer object-contain rounded-full ${
+                      selectedChip === chip.id ? "pulse-zoom" : ""
+                    }`}
+                    onClick={() => setSelectedChip(chip.id)}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
-};
-
-export default DragonTigerGame;
+}
