@@ -1,9 +1,9 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import casinoBackground from "@/assets/casino-background.png";
-import dragonImage from "@/assets/dragon.png";
-import tigerImage from "@/assets/tiger.png";
-import dealerImage from "@/assets/dealer.png";
+import casinoTable from "@/assets/casino-table.png";
+import chipsImage from "@/assets/chips.png";
+import tigerCard from "@/assets/tiger-card.png";
+import dragonCard from "@/assets/dragon-card.png";
 
 const DragonTigerGame = () => {
   // Mock betting history data
@@ -36,7 +36,7 @@ const DragonTigerGame = () => {
     <div 
       className="min-h-screen w-full relative overflow-hidden bg-cover bg-center bg-no-repeat flex flex-col"
       style={{ 
-        backgroundImage: `url(${casinoBackground})`,
+        backgroundImage: `url(${casinoTable})`,
         backgroundAttachment: 'fixed'
       }}
     >
@@ -74,36 +74,9 @@ const DragonTigerGame = () => {
           ))}
         </div>
 
-        {/* Dealer section */}
+        {/* Dealer section - now part of background */}
         <div className="relative mb-6">
-          <div className="flex items-center justify-center relative">
-            {/* Dragon */}
-            <div className="absolute left-0 w-24 h-24 -translate-x-20">
-              <img 
-                src={dragonImage} 
-                alt="Dragon" 
-                className="w-full h-full object-contain filter drop-shadow-lg"
-              />
-            </div>
-            
-            {/* Dealer */}
-            <div className="w-32 h-32 rounded-2xl overflow-hidden border-2 border-gold bg-card/80 backdrop-blur-sm shadow-lg">
-              <img 
-                src={dealerImage} 
-                alt="Dealer" 
-                className="w-full h-full object-cover"
-              />
-            </div>
-            
-            {/* Tiger */}
-            <div className="absolute right-0 w-24 h-24 translate-x-20">
-              <img 
-                src={tigerImage} 
-                alt="Tiger" 
-                className="w-full h-full object-contain filter drop-shadow-lg"
-              />
-            </div>
-          </div>
+          <div className="h-20" /> {/* Spacer for dealer area */}
         </div>
 
         {/* TIE betting area */}
@@ -123,38 +96,28 @@ const DragonTigerGame = () => {
         {/* Dragon vs Tiger betting cards */}
         <div className="flex gap-4 mb-6 w-full max-w-sm">
           {/* Dragon */}
-          <Button
-            variant="outline"
-            className="flex-1 h-24 p-0 bg-dragon/20 border-2 border-dragon hover:bg-dragon/30 rounded-xl transition-all duration-300 hover:shadow-dragon group"
-          >
-            <div className="flex flex-col items-center text-dragon-foreground">
-              <div className="text-xl font-bold">0</div>
-              <div className="text-sm font-bold">DRAGON</div>
-              <div className="text-xs opacity-80">x2</div>
-            </div>
-          </Button>
+          <div className="flex-1 relative cursor-pointer transition-all duration-300 hover:scale-105">
+            <img 
+              src={dragonCard} 
+              alt="Dragon betting card" 
+              className="w-full h-auto object-contain"
+            />
+          </div>
 
           {/* Tiger */}
-          <Button
-            variant="outline"
-            className="flex-1 h-24 p-0 bg-tiger/20 border-2 border-tiger hover:bg-tiger/30 rounded-xl transition-all duration-300 hover:shadow-tiger group"
-          >
-            <div className="flex flex-col items-center text-tiger-foreground">
-              <div className="text-xl font-bold">0</div>
-              <div className="text-sm font-bold">TIGER</div>
-              <div className="text-xs opacity-80">x2</div>
-            </div>
-          </Button>
+          <div className="flex-1 relative cursor-pointer transition-all duration-300 hover:scale-105">
+            <img 
+              src={tigerCard} 
+              alt="Tiger betting card" 
+              className="w-full h-auto object-contain"
+            />
+          </div>
         </div>
 
         {/* User info */}
         <div className="flex items-center gap-2 mb-4">
-          <div className="w-8 h-8 bg-card rounded-full border-2 border-gold overflow-hidden">
-            <img 
-              src={dealerImage} 
-              alt="User" 
-              className="w-full h-full object-cover"
-            />
+          <div className="w-8 h-8 bg-gold rounded-full border-2 border-gold-glow flex items-center justify-center">
+            <span className="text-xs font-bold text-gold-foreground">P</span>
           </div>
           <span className="text-lg font-bold text-gold">1.7</span>
         </div>
@@ -162,14 +125,16 @@ const DragonTigerGame = () => {
         {/* Betting chips */}
         <div className="flex flex-wrap gap-2 justify-center max-w-sm">
           {chipValues.map((value, index) => (
-            <Button
+            <div
               key={value}
-              variant="outline"
-              size="sm"
-              className={`w-16 h-16 rounded-full p-0 border-3 border-chip-border bg-gradient-to-br ${chipColors[index]} text-white font-bold shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-xl`}
-            >
-              {value >= 1000 ? `${value / 1000}k` : value}
-            </Button>
+              className="relative w-16 h-16 cursor-pointer transition-all duration-300 hover:scale-110"
+              style={{
+                backgroundImage: `url(${chipsImage})`,
+                backgroundPosition: `${-index * 80}px 0px`,
+                backgroundSize: '480px 80px',
+                backgroundRepeat: 'no-repeat'
+              }}
+            />
           ))}
         </div>
       </div>
