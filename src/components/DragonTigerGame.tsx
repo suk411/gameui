@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import { AiFillHome } from "react-icons/ai";
 import { MdTrendingUp } from "react-icons/md";
-import { PiUsersFill } from "react-icons/pi";
+import { FaUserAlt } from "react-icons/fa";
 import { MdCurrencyRupee } from "react-icons/md";
 import { MdOutlineFiberNew } from "react-icons/md";
 
@@ -50,82 +50,82 @@ export default function MyComponent() {
       <style>
         {`
           html, body, #root {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            background: #000;
-            overflow: hidden;
-          }
-          .pulse-zoom {
-            animation: pulseScale 1s ease-in-out infinite;
-            border-radius: 9999px;
-            border: 2px solid #FFD700;
-          }
-          @keyframes pulseScale {
-            0%, 100% { transform: scale(1.03); box-shadow: 0 0 2px 2px #FFD700; }
-            50% { transform: scale(1.08); box-shadow: 0 0 3px 4px #FFD700; }
-          }
-          @keyframes upDownImg {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-          }
-          .animate-upDownImg {
-            animation: upDownImg 4s ease-in-out infinite;
-          }
-          .flame-container {
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            width: 90px;
-            height: 140px;
-            transform: translateX(-50%);
-            pointer-events: none;
-            z-index: 16;
-            overflow: visible;
-          }
-          .flame-glow {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 9999px;
-            background: radial-gradient(circle at bottom, rgba(255,140,0,0.8) 35%, transparent 80%);
-            filter: blur(18px);
-            animation: flamePulse 4s ease-in-out infinite;
-          }
-          @keyframes flamePulse {
-            0%, 100% { opacity: 0.7; }
-            50% { opacity: 1; }
-          }
-          .flame-particle {
-            position: absolute;
-            bottom: 16px;
-            width: 12px;
-            height: 12px;
-            background: radial-gradient(circle, rgba(255,165,0,0.9) 40%, transparent 90%);
-            border-radius: 50%;
-            filter: drop-shadow(0 0 4px #ffae00);
-            animation: particleUp 4s linear infinite;
-          }
-          .flame-particle:nth-child(1) { left: 12%; animation-delay: 0s; }
-          .flame-particle:nth-child(2) { left: 45%; animation-delay: 1.3s; }
-          .flame-particle:nth-child(3) { left: 77%; animation-delay: 2.6s; }
-          @keyframes particleUp {
-            0% { opacity: 1; transform: translateY(0) scale(1); }
-            100% { opacity: 0; transform: translateY(-90px) scale(1.4); }
-          }
-          .creature-container {
-            position: absolute;
-            top: 20%;
-            width: 25%;
-            max-width: 180px;
-            user-select: none;
-            z-index: 20;
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-          }
-        `}
+             height: 100%;
+             margin: 0;
+             padding: 0;
+             background: #000;
+             overflow: hidden;
+           }
+           .pulse-zoom {
+             animation: pulseScale 1s ease-in-out infinite;
+             border-radius: 9999px;
+             border: 2px solid #FFD700;
+           }
+           @keyframes pulseScale {
+             0%, 100% { transform: scale(1.03); box-shadow: 0 0 2px 2px #FFD700; }
+             50% { transform: scale(1.08); box-shadow: 0 0 3px 4px #FFD700; }
+           }
+           @keyframes upDownImg {
+             0%, 100% { transform: translateY(0); }
+             50% { transform: translateY(-20px); }
+           }
+           .animate-upDownImg {
+             animation: upDownImg 4s ease-in-out infinite;
+           }
+           .flame-container {
+             position: absolute;
+             bottom: 0;
+             left: 50%;
+             width: 90px;
+             height: 140px;
+             transform: translateX(-50%);
+             pointer-events: none;
+             z-index: 16;
+             overflow: visible;
+           }
+           .flame-glow {
+             position: absolute;
+             bottom: 0;
+             width: 100%;
+             height: 100%;
+             border-radius: 9999px;
+             background: radial-gradient(circle at bottom, rgba(255,140,0,0.8) 35%, transparent 80%);
+             filter: blur(18px);
+             animation: flamePulse 4s ease-in-out infinite;
+           }
+           @keyframes flamePulse {
+             0%, 100% { opacity: 0.7; }
+             50% { opacity: 1; }
+           }
+           .flame-particle {
+             position: absolute;
+             bottom: 16px;
+             width: 12px;
+             height: 12px;
+             background: radial-gradient(circle, rgba(255,165,0,0.9) 40%, transparent 90%);
+             border-radius: 50%;
+             filter: drop-shadow(0 0 4px #ffae00);
+             animation: particleUp 4s linear infinite;
+           }
+           .flame-particle:nth-child(1) { left: 12%; animation-delay: 0s; }
+           .flame-particle:nth-child(2) { left: 45%; animation-delay: 1.3s; }
+           .flame-particle:nth-child(3) { left: 77%; animation-delay: 2.6s; }
+           @keyframes particleUp {
+             0% { opacity: 1; transform: translateY(0) scale(1); }
+             100% { opacity: 0; transform: translateY(-90px) scale(1.4); }
+           }
+           .creature-container {
+             position: absolute;
+             top: 20%;
+             width: 25%;
+             max-width: 180px;
+             user-select: none;
+             z-index: 20;
+             display: flex;
+             justify-content: center;
+             align-items: flex-end;
+           }
+         `}
       </style>
 
       <div
@@ -136,14 +136,14 @@ export default function MyComponent() {
           overflow: 'hidden',
         }}
       >
-        
+
         <div
           className="relative rounded-xl shadow-2xl bg-cover bg-no-repeat bg-center flex flex-col justify-end items-center"
           style={{
-            width: "100vw",
+            width: "90vw",
             maxWidth: "430px",
             minWidth: "320px",
-            height: "100vh",
+            height: "90vh",
             maxHeight: "932px",
             minHeight: "500px",
             backgroundImage: `url(${casinoTable})`,
@@ -151,100 +151,73 @@ export default function MyComponent() {
           }}
         >
 
-            {/* Home icon */}
-          <div className="absolute top-3 left-3 cursor-pointer z-30 text-[#450b00] rounded-full bg-yellow-700 border-yellow-500 border-y-2 select-none">
-            <AiFillHome size={28} />
+          {/* Home icon */}
+          <div className="absolute top-3 left-3 cursor-pointer z-30 text-[#450b00] rounded-full bg-yellow-700 border-yellow-500 border-y-2 select-none p-1 md:p-2">
+            <AiFillHome size={24} className="md:text-3xl" />
           </div>
 
-              {/* other players icon */}
-              <div className="absolute top-60 right-3 cursor-pointer z-30 text-[#450b00]  rounded-[8px] border-[#450b00]  border-r-2 border-t-2 p-[7px]   bg-yellow-800 select-none">
-                  <PiUsersFill size={22} />
-                </div>
+          {/* other players icon */}
+          <div className="absolute top-60 right-3 cursor-pointer z-30 text-[rgb(253,155,137)] rounded-[8px] border-yellow-600 border-r-2 border-t-2 p-1 md:p-2 bg-[#450b00] select-none">
+            <FaUserAlt size={18} className="md:text-2xl" />
+          </div>
 
+          {/* trand icon */}
+          <div className="absolute top-72 left-3 px-2 cursor-pointer z-30 text-[#450b00] rounded-full bg-yellow-700 border-yellow-500 border-y-2 select-none">
+            <MdTrendingUp size={20} />
+          </div>
 
-                  {/* trand icon */}
-                <div className="absolute top-72 left-6 px-2 cursor-pointer z-30 text-[#450b00] rounded-full bg-yellow-700 border-yellow-500 border-y-2 select-none">
-                  <MdTrendingUp size={20} />
-                </div>
+          {/* new icon */}
+          <div className="absolute top-72 right-10 px-2 cursor-pointer z-30 text-[#450b00] rounded-full bg-yellow-700 border-yellow-500 border-y-2 select-none">
+            <MdOutlineFiberNew size={20} />
+          </div>
 
-                  {/* user balance  */}
-                 
-           
-
-                <div className="absolute bottom-[89px] left-36   cursor-pointer z-40 text-[#450b00] rounded-full bg-yellow-700 border-yellow-500 border-x-2 border-t-2 select-none">
-                  <MdCurrencyRupee size={26} />
-                  </div>
-
-                 <div className="  flex items-center gap-1 flex-wrap justify-center      flex-1
-                    absolute bottom-[84px] left-36  cursor-pointer z-30 text-[#ffffff] rounded-sm w-18 px-2  bg-black/60 border-yellow-700 border-x-2 border-t-2  select-none">
-                   <h1 className="pl-5 p-1 font-bold">1.2</h1>
-                 </div>
-
-               
-             
-
-                   {/* new icon */}
-                <div className="absolute top-72 right-10 px-2 cursor-pointer z-30 text-[#450b00] rounded-full bg-yellow-700 border-yellow-500 border-y-2 select-none">
-                  <MdOutlineFiberNew  size={20} />
-                </div>
-
-
-
-
-         {/*  timer  */}
+          {/* timer */}
           <div
-            className=" absolute top-56  flex items-center justify-center"
+            className="absolute top-60 flex items-center justify-center"
             style={{
-              width: "13vh",
-              height: "9vh",
+              width: "10vw",
+              height: "6.5vh",
+              maxWidth: "60px",
+              maxHeight: "45px",
               backgroundImage: `url(${clockIcon})`,
               backgroundSize: "100% 100%",
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center",
-              marginRight: "10px",
+              marginRight: "11px",
             }}
           >
             <div
-              className="pt-3 flex items-center justify-center font-bold text-[1.4rem] text-[#483e26] select-none"
+              className="pt-3 flex items-center justify-center font-bold text-[1.4rem] text-[#443001] select-none"
               style={{ backgroundColor: "transparent" }}
             >
               {timer}
             </div>
           </div>
 
-          
-
           <div
-            className="z-40 flex items-center justify-between px-4 py-2 rounded-xl shadow-lg max-w-[370px] mx-auto mb-4 bg-transparent ">
-           
+            className="z-40 flex items-center justify-between px-4 py-2 rounded-xl shadow-lg max-w-[370px] mx-auto mb-4 bg-transparent"
+          >
 
             {/* Trend Bar */}
-            <div className=" absolute top-72 right-20 flex items-center gap-1 flex-wrap justify-center flex-1">
+            <div className="absolute top-72 right-20 flex items-center gap-1 flex-wrap justify-center flex-1 max-w-[140px]">
               {trends.map((v, i) => (
                 <div
                   key={i}
                   className={
-                    "w-5 h-5 flex justify-center items-center rounded-[4px] text-yellow-600 font-extrabold text-[0.9rem] border-b-[2px] select-none shadow "
-                    +
+                    "w-5 h-5 flex justify-center items-center rounded-[4px] text-yellow-600 font-extrabold text-[0.9rem] border-b-[2px] select-none shadow " +
                     (v === "T"
                       ? "bg-[#7f4f25] text-white border-[#c8a978]"
                       : v === "D"
-                      ? "bg-[#326474] text-white border-[#93d7f8]"
-                      
-                      : "bg-[#255e38] text-white border-[#43ad66]")
+                        ? "bg-[#326474] text-white border-[#93d7f8]"
+                        : "bg-[#255e38] text-white border-[#43ad66]")
                   }
                 >
                   {v}
                 </div>
               ))}
-              
-            
             </div>
 
-            
           </div>
-
-        
 
           {/* Dragon container on left */}
           <div
@@ -273,35 +246,48 @@ export default function MyComponent() {
             </div>
           </div>
 
-          {/* Bottom chips bar */}
+          {/* user balance */}
+          <div className="absolute bottom-[2.1rem] left-[8.5rem] cursor-pointer z-40 text-[#ffe0da] rounded-full bg-[#5f1e11] border-[#5b6612] border-[1px] select-none  md:p-2">
+            <MdCurrencyRupee size={30} />
+          </div>
+
           <div
-            className="w-full"
+            className="flex items-center gap-1 flex-wrap justify-center flex-1 absolute bottom-[1.6rem] left-36 cursor-pointer text-white rounded-3xl w-18 px-2  border-2 border-[#5f5c07] select-none"
             style={{
-              position: 'fixed',
-              left: '50%',
-              bottom: 0,
-              transform: 'translateX(-50%)',
-              width: '100%',
-              maxWidth: "430px",
-              zIndex: 20,
+              backgroundImage: `
+                repeating-linear-gradient(45deg, rgba(255,255,255,0.06) 0, rgba(255,255,255,0.06) 1px, transparent 1px, transparent 20px),
+                repeating-linear-gradient(-45deg, rgba(255,255,255,0.06) 0, rgba(255,255,255,0.06) 1px, transparent 1px, transparent 20px)
+              `,
+              backgroundSize: "20px 20px",
+              backgroundColor: "#000000"
             }}
           >
+            <h1 className="pl-12 p-3
+             font-bold text-sm md:text-lg">10.2</h1>
+          </div>
+
+          {/* Bottom chips bar */}
+          <div
+            className="fixed left-1/2 bottom-0 transform -translate-x-1/2 w-full max-w-[430px] z-20"
+          >
+            <div className="border-t-4   border-[#5f5c07]" />
             <div
+              className=" rounded-tl-lg rounded-tr-lg flex flex-col items-center px-5 py-3 bg-black relative overflow-hidden border border-[#2b0d0d] rounded-t-none shadow-inner"
               style={{
-                height: '6px',
-                background:
-                  'linear-gradient(90deg, #8b5a2b, #a97453, #8b5a2b)',
-                boxShadow: '0 2px 6px rgba(0,0,0,0.5)',
+                backgroundImage: `
+                  repeating-linear-gradient(45deg, rgba(255,255,255,0.05) 0, rgba(255,255,255,0.05) 1px, transparent 1px, transparent 20px),
+                  repeating-linear-gradient(-45deg, rgba(255,255,255,0.05) 0, rgba(255,255,255,0.05) 1px, transparent 1px, transparent 20px)
+                `,
+                backgroundSize: "20px 20px"
               }}
-            />
-            <div className="flex flex-col items-center bg-black px-4 py-3 rounded-t-none shadow-inner w-full border-t border-[#8b5a2b]">
-              <div className="flex gap-4 justify-center">
+            >
+              <div className="flex gap-4 justify-center flex-wrap">
                 {chips.map((chip) => (
                   <img
                     key={chip.id}
                     src={chip.src}
                     alt={chip.alt}
-                    className={`w-14 h-14 cursor-pointer object-contain rounded-full ${
+                    className={`w-10 h-10 md:w-14 md:h-14 cursor-pointer object-contain rounded-full ${
                       selectedChip === chip.id ? "pulse-zoom" : ""
                     }`}
                     onClick={() => setSelectedChip(chip.id)}
