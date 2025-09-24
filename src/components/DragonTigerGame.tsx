@@ -15,13 +15,12 @@ import casinoTable from "../assets/casino-table.jpg";
 import tigerBody from "../assets/tiger-body.png";
 import dragonBody from "../assets/dragon-body.png";
 import clockIcon from "../assets/clock-icon.png";
-import { relative } from "path";
-import { readlink } from "fs";
 
 export default function MyComponent() {
   const [selectedChip, setSelectedChip] = useState(null);
   const [timer, setTimer] = useState(15);
   const [phase, setPhase] = useState("play"); // "play" or "result"
+  const [trendOpen, setTrendOpen] = useState(false);
 
   const chips = [
     { id: 10, src: chip10, alt: "10" },
@@ -33,17 +32,7 @@ export default function MyComponent() {
 
   const trends = ["T", "T", "T", "D", "T", "D", "T", "D", "D", "Ti"];
 
-  useEffect(() => {
-    setTimer(phase === "play" ? 15 : 10);
-    const interval = setInterval(() => {
-      setTimer((t) => {
-        if (t > 1) return t - 1;
-        setPhase((p) => (p === "play" ? "result" : "play"));
-        return phase === "play" ? 10 : 15;
-      });
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [phase]);
+  
 
   return (
     <>
@@ -51,83 +40,81 @@ export default function MyComponent() {
         {`
           html, body, #root {
              height: 100%;
-             
              margin: 0;
              padding: 0;
              background: #000;
              overflow: hidden;
            }
-           .pulse-zoom {
-             animation: pulseScale 1s ease-in-out infinite;
-             border-radius: 9999px;
-             border: 2px solid #FFD700;
-           }
-           @keyframes pulseScale {
-             0%, 100% { transform: scale(1.03); box-shadow: 0 0 2px 2px #FFD700; }
-             50% { transform: scale(1.08); box-shadow: 0 0 3px 4px #FFD700; }
-           }
-           @keyframes upDownImg {
-             0%, 100% { transform: translateY(0); }
-             50% { transform: translateY(-20px); }
-           }
-           .animate-upDownImg {
-             animation: upDownImg 4s ease-in-out infinite;
-           }
-           .flame-container {
-             position: absolute;
-             bottom: 0;
-             left: 50%;
-             width: 90px;
-             height: 140px;
-             transform: translateX(-50%);
-             pointer-events: none;
-             z-index: 16;
-             overflow: visible;
-           }
-           .flame-glow {
-             position: absolute;
-             bottom: 0;
-             width: 100%;
-             height: 100%;
-             border-radius: 9999px;
-             background: radial-gradient(circle at bottom, rgba(255,140,0,0.8) 35%, transparent 80%);
-             filter: blur(18px);
-             animation: flamePulse 4s ease-in-out infinite;
-           }
-           @keyframes flamePulse {
-             0%, 100% { opacity: 0.7; }
-             50% { opacity: 1; }
-           }
-           .flame-particle {
-             position: absolute;
-             bottom: 16px;
-             width: 12px;
-             height: 12px;
-             background: radial-gradient(circle, rgba(255,165,0,0.9) 40%, transparent 90%);
-             border-radius: 50%;
-             filter: drop-shadow(0 0 4px #ffae00);
-             animation: particleUp 4s linear infinite;
-           }
-           .flame-particle:nth-child(1) { left: 12%; animation-delay: 0s; }
-           .flame-particle:nth-child(2) { left: 45%; animation-delay: 1.3s; }
-           .flame-particle:nth-child(3) { left: 77%; animation-delay: 2.6s; }
-           @keyframes particleUp {
-             0% { opacity: 1; transform: translateY(0) scale(1); }
-             100% { opacity: 0; transform: translateY(-90px) scale(1.4); }
-           }
-           .creature-container {
-             position: absolute;
-             top: 20%;
-             width: 25%;
-             max-width: 180px;
-             user-select: none;
-             z-index: 20;
-             display: flex;
-             justify-content: center;
-             align-items: flex-end;
-           }
-            
-         `}
+          .pulse-zoom {
+            animation: pulseScale 1s ease-in-out infinite;
+            border-radius: 9999px;
+            border: 2px solid #FFD700;
+          }
+          @keyframes pulseScale {
+            0%, 100% { transform: scale(1.03); box-shadow: 0 0 2px 2px #FFD700; }
+            50% { transform: scale(1.08); box-shadow: 0 0 3px 4px #FFD700; }
+          }
+          @keyframes upDownImg {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+          }
+          .animate-upDownImg {
+            animation: upDownImg 4s ease-in-out infinite;
+          }
+          .flame-container {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 90px;
+            height: 140px;
+            transform: translateX(-50%);
+            pointer-events: none;
+            z-index: 16;
+            overflow: visible;
+          }
+          .flame-glow {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 9999px;
+            background: radial-gradient(circle at bottom, rgba(255,140,0,0.8) 35%, transparent 80%);
+            filter: blur(18px);
+            animation: flamePulse 4s ease-in-out infinite;
+          }
+          @keyframes flamePulse {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+          }
+          .flame-particle {
+            position: absolute;
+            bottom: 16px;
+            width: 12px;
+            height: 12px;
+            background: radial-gradient(circle, rgba(255,165,0,0.9) 40%, transparent 90%);
+            border-radius: 50%;
+            filter: drop-shadow(0 0 4px #ffae00);
+            animation: particleUp 4s linear infinite;
+          }
+          .flame-particle:nth-child(1) { left: 12%; animation-delay: 0s; }
+          .flame-particle:nth-child(2) { left: 45%; animation-delay: 1.3s; }
+          .flame-particle:nth-child(3) { left: 77%; animation-delay: 2.6s; }
+          @keyframes particleUp {
+            0% { opacity: 1; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(-90px) scale(1.4); }
+          }
+          .creature-container {
+            position: absolute;
+            top: 20%;
+            width: 25%;
+            max-width: 180px;
+            user-select: none;
+            z-index: 20;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+          }
+        `}
       </style>
 
       <div
@@ -162,8 +149,11 @@ export default function MyComponent() {
             <FaUserAlt size={18} className="md:text-2xl" />
           </div>
 
-          {/* trand icon */}
-          <div className="absolute top-[44.7vh] left-[12vw] px-[1vw]  z-30 text-[#450b00] rounded-full bg-yellow-700 border-yellow-500 border-y-2 select-none">
+          {/* trand icon updated with click */}
+          <div
+           
+            className="absolute top-[44vh] left-[16vw] px-[1vw]  z-30 text-[#450b00] rounded-full bg-yellow-700 border-yellow-500 border-y-2 select-none cursor-pointer"
+          >
             <MdTrendingUp size={25} />
           </div>
 
@@ -184,7 +174,6 @@ export default function MyComponent() {
               backgroundSize: "100% 100%",
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center",
-              
             }}
           >
             <div
@@ -196,9 +185,6 @@ export default function MyComponent() {
           </div>
 
           <div className="z-40 flex items-center justify-between px-4 py-2 rounded-xl shadow-lg max-w-[370px] mx-auto mb-4 bg-transparent">
-
-
-
             {/* Trend Bar */}
             <div className="absolute top-[44.5vh] bg-black/40 rounded-[1vw] p-[1vw] right-[22vw] flex items-center gap-1 flex-wrap border-blue-300 border-y justify-center flex-1 max-w-[38vh]">
               {trends.map((v, i) => (
@@ -258,12 +244,12 @@ export default function MyComponent() {
           </div>
 
           {/* user balance */}
-          <div className="absolute bottom-[7.5vh] left-[35vw]  z-40 text-[#ffe0da] rounded-full bg-[#5f1e11] border-[#5b6612] border-[1px] select-none ">
+          <div className="absolute bottom-[7.2vh] left-[36vw]   z-50 text-[#ffe0da] rounded-[1vw] bg-[#5f1e11] border-[#5b6612] border-[1px] select-none ">
             <MdCurrencyRupee size={20} />
           </div>
 
           <div
-            className=" px-[5vw] flex-wrap  justify-center flex-1 absolute bottom-[4vh] left-[36vw]  text-white rounded-3xl w-[20vw]   border-2 border-[#5f5c07] select-none"
+            className=" z-40 flex-wrap  justify-center flex-1 absolute bottom-[4vh] left-[40vw]  text-white rounded-3xl w-[20vw]   border-2 border-[#5f5c07] select-none"
             style={{
               backgroundImage: `
                 repeating-linear-gradient(45deg, rgba(255,255,255,0.06) 0, rgba(255,255,255,0.06) 1px, transparent 1px, transparent 20px),
@@ -273,16 +259,130 @@ export default function MyComponent() {
               backgroundColor: "#000000",
             }}
           >
-            <h1
-              className=" pb-[3vh]
-             font-bold text-sm text-center "
-            >
-              551524
-            </h1>
+            <h1 className=" pb-[3vh] font-bold text-sm text-center ">951888</h1>
           </div>
 
+   {/* tie betting area */}
+<div className="absolute bottom-[35vh] w-[80vw] h-[15vh] rounded-xl border-blue-400 border-[0.5vw] bg-gradient-to-br from-emerald-900 to-teal-700 shadow-lg cursor-pointer select-none flex items-center justify-center">
+
+  {/* total bets count centered on top layer */}
+  <span
+    className="absolute  text -emerald-100/65 text-sm font-bold bg-green-700 bg-opacity-40 rounded-b-sm px-[8vw]  select-none"
+    style={{
+      top: '2vh',
+      left: '40vw',
+      transform: 'translate(-50%, -50%)',
+      zIndex: 9999,
+    }}
+  >
+    0
+  </span>
+
+  <div className="absolute -inset-[5vw] rounded-xl bg-gradient-to-br from-emerald-700 to-cyan-700 opacity-20 blur-lg pointer-events-none"></div>
+
+  <div className="relative flex h-[13vh] w-[80vw] items-center justify-center rounded-xl bg-gradient-to-br from-emerald-800 to-teal-800">
+    <span
+      className="text-cyan-100 text-xl font-semibold tracking-wide"
+      style={{
+        textShadow: '0 2px 5px #0c4a6e',
+        opacity: 0.5,
+      }}
+    >
+      TIE x10
+    </span>
+  </div>
+
+</div>
+
+
+
+ {/* dragon betting area */}
+<div className="absolute bottom-[9vh] left-[8vw] w-[40vw] h-[25vh] rounded-xl border-black border-[0.2vw] bg-gradient-to-br from-indigo-900 to-blue-700 shadow-lg cursor-pointer select-none flex items-center justify-center">
+
+  {/* total bets count centered on top layer */}
+  <span
+    className="absolute  text -emerald-100/65 text-sm font-bold bg-indigo-900 bg-opacity-40 rounded-b-sm px-[6vw]  select-none"
+    style={{
+      top: '2vh',
+      left: '17vw',
+      transform: 'translate(-50%, -50%)',
+      zIndex: 9999,
+    }}
+  >
+    0
+  </span>
+
+  <div className="relative -inset-[5vw] rounded-xl bg-gradient-to-br from-blue-700 to-sky-700 opacity-20  blur-lg pointer-events-none"></div>
+
+  <div className="relative flex h-[19vh] w-[80vw] items-center justify-center rounded-xl  bg-gradient-to-br from-blue-800  to-blue-800">
+   <span
+  className="text-blue-500 text-lg font-semibold tracking-wide"
+  style={{ 
+    opacity: 0.5, 
+    textShadow: '0 2px 0 black', 
+    display: 'inline-flex', 
+    flexDirection: 'column', 
+    alignItems: 'center' // optional, to center text horizontally
+  }}
+>
+  <span>DRAGON</span>
+  <span>2x</span>
+</span>
+
+  </div>
+
+</div>
+
+
+
+ {/* tiger betting area */}
+<div className="absolute bottom-[9vh] right-[8vw] w-[40vw] h-[25vh] rounded-xl border-black border-[0.2vw] bg-gradient-to-br from-red-900 to-yellow-700 shadow-lg cursor-pointer select-none flex items-center justify-center">
+
+  {/* total bets count centered on top layer */}
+  <span
+    className="absolute  text -emerald-100/65 text-sm font-bold bg-red-900 bg-opacity-40 rounded-b-sm px-[6vw]  select-none"
+    style={{
+      top: '2vh',
+      left: '17vw',
+      transform: 'translate(-50%, -50%)',
+      zIndex: 9999,
+    }}
+  >
+    0
+  </span>
+
+  <div className="relative -inset-[5vw] rounded-xl bg-gradient-to-br from-red-700 to-yellow-700 opacity-20  blur-lg pointer-events-none"></div>
+
+  <div className="relative flex h-[19vh] w-[80vw] items-center justify-center rounded-xl  bg-gradient-to-br from-yellow-800  to-red-800">
+  <span
+  className="text-yellow-500 text-lg font-semibold tracking-wide"
+  style={{ 
+    opacity: 0.5, 
+    textShadow: '0 2px 0 black', 
+    display: 'inline-flex', 
+    flexDirection: 'column', 
+    alignItems: 'center' // optional, to center text horizontally
+  }}
+>
+  <span>TIGER</span>
+  <span>2x</span>
+</span>
+
+
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+
           {/* Bottom chips bar */}
-          <div className="fixed left-1/2 bottom-0 transform -translate-x-1/2 w-full max-w-[430px] z-20">
+          <div className="fixed left-1/2 z-40 bottom-0 transform -translate-x-1/2 w-full max-w-[430px] z-20">
             <div className="border-t-4   border-[#5f5c07]" />
             <div
               className=" rounded-tl-lg rounded-tr-lg flex flex-col items-center  bg-black relative overflow-hidden border border-[#2b0d0d] rounded-t-none shadow-inner"
@@ -309,6 +409,8 @@ export default function MyComponent() {
               </div>
             </div>
           </div>
+
+         
         </div>
       </div>
     </>
