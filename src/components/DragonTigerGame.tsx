@@ -139,7 +139,7 @@ export default function MyComponent() {
       >
         {/* game  screen */}
         <div
-  className="relative rounded-xl shadow-2xl border-2 border-red-500 flex flex-col justify-end items-center mx-auto overflow-hidden"
+  className="relative  shadow-2xl border-2 border-red-500 flex flex-col justify-end items-center mx-auto overflow-hidden"
   style={{
     width: "100vw",         // fills viewport width
     height: "100vh",        // fills viewport height
@@ -291,7 +291,7 @@ export default function MyComponent() {
                 backgroundSize: "25px 30px",
               }}
             >
-              <div className="flex gap-[4vh] justify-center flex-wrap">
+              <div className="flex gap-[6vw] justify-center flex-wrap">
                 {chips.map((chip) => (
                   <img
                     key={chip.id}
