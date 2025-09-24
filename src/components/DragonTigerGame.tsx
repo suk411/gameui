@@ -141,7 +141,7 @@ export default function MyComponent() {
           className="relative rounded-xl shadow-2xl bg-cover bg-no-repeat bg-center flex flex-col justify-end items-center"
           style={{
             width: "90vw",
-            maxWidth: "430px",
+            maxWidth: "100%",
             minWidth: "320px",
             height: "100vh",
             maxHeight: "932px",
