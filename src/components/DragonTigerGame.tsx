@@ -16,6 +16,7 @@ import tigerBody from "../assets/tiger-body.png";
 import dragonBody from "../assets/dragon-body.png";
 import clockIcon from "../assets/clock-icon.png";
 import { relative } from "path";
+import { readlink } from "fs";
 
 export default function MyComponent() {
   const [selectedChip, setSelectedChip] = useState(null);
@@ -139,36 +140,35 @@ export default function MyComponent() {
       >
         {/* game  screen */}
         <div
-  className="relative  shadow-2xl border-2 border-red-500 flex flex-col justify-end items-center mx-auto overflow-hidden"
-  style={{
-    width: "100vw",         // fills viewport width
-    height: "100vh",        // fills viewport height
-    maxWidth: "460px",      // image's original width
-    maxHeight: "932px",     // image's original height
-    backgroundImage: `url(${casinoTable})`,
-    backgroundSize: "cover",  // scales image without cropping
-    backgroundRepeat: "no-repeat",
-    backgroundPosition: "center",
-  }}
->
- 
+          className="relative  shadow-2xl border-2 border-red-500 flex flex-col justify-end items-center mx-auto overflow-hidden"
+          style={{
+            width: "100vw", // fills viewport width
+            height: "100vh", // fills viewport height
+            maxWidth: "460px", // image's original width
+            maxHeight: "932px", // image's original height
+            backgroundImage: `url(${casinoTable})`,
+            backgroundSize: "cover", // scales image without cropping
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center",
+          }}
+        >
           {/* Home icon */}
-          <div className="  cursor-pointer z-30 text-[#450b00] rounded-full bg-yellow-700 border-yellow-500 border-y-2 select-none p-1 md:p-2">
+          <div className="absolute top-[2vh] left-[2vw]  z-30 text-[#450b00] rounded-full bg-yellow-700 border-yellow-500 border-y-2 select-none p-[1vw] ">
             <AiFillHome size={24} className="md:text-3xl" />
           </div>
 
           {/* other players icon */}
-          <div className="absolute top-60 right-3 cursor-pointer z-30 text-[rgb(253,155,137)] rounded-[8px] border-yellow-600 border-r-2 border-t-2 p-1 md:p-2 bg-[#450b00] select-none">
+          <div className="absolute top-[38vh] right-[3vw] +z-30 text-[rgb(253,155,137)] rounded-[8px] border-yellow-600 border-r-2 border-t-2 p-[1vw]  bg-[#450b00] select-none">
             <FaUserAlt size={18} className="md:text-2xl" />
           </div>
 
           {/* trand icon */}
-          <div className="absolute top-[44.5vh] left-[6vh] px-2 cursor-pointer z-30 text-[#450b00] rounded-full bg-yellow-700 border-yellow-500 border-y-2 select-none">
+          <div className="absolute top-[44.5vh] left-[2vw] px-[1vw]  z-30 text-[#450b00] rounded-full bg-yellow-700 border-yellow-500 border-y-2 select-none">
             <MdTrendingUp size={20} />
           </div>
 
           {/* new icon */}
-          <div className="absolute top-72 right-10 px-2 cursor-pointer z-30 text-[#450b00] rounded-full bg-yellow-700 border-yellow-500 border-y-2 select-none">
+          <div className="absolute top-[44.5vh] right-[2vw] px-2  z-30 text-[#450b00] rounded-full bg-yellow-700 border-yellow-500 border-y-2 select-none">
             <MdOutlineFiberNew size={20} />
           </div>
 
@@ -176,19 +176,19 @@ export default function MyComponent() {
           <div
             className="absolute top-[38vh] flex items-center justify-center"
             style={{
-              width: "12vw",
-              height: "6.5vh",
+              width: "7vh",
+              height: "5vh",
               maxWidth: "60px",
               maxHeight: "45px",
               backgroundImage: `url(${clockIcon})`,
               backgroundSize: "100% 100%",
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center",
-              marginRight: "11px",
+              
             }}
           >
             <div
-              className="pt-3 flex items-center justify-center font-bold text-[1.4rem] text-[#443001] select-none"
+              className=" flex items-center justify-center pt-[1vh] font-bold text-[1.2rem] text-[#443001] select-none"
               style={{ backgroundColor: "transparent" }}
             >
               {timer}
@@ -197,12 +197,12 @@ export default function MyComponent() {
 
           <div className="z-40 flex items-center justify-between px-4 py-2 rounded-xl shadow-lg max-w-[370px] mx-auto mb-4 bg-transparent">
             {/* Trend Bar */}
-            <div className="absolute top-[44.5vh] bg-red-600 right-[12vh] flex items-center gap-1 flex-wrap justify-center flex-1 max-w-[38vh]">
+            <div className="absolute top-[44.5vh] bg-black/40 py-[1vw] right-[25vw] flex items-center gap-1 flex-wrap border-blue-300 border-y justify-center flex-1 max-w-[38vh]">
               {trends.map((v, i) => (
                 <div
                   key={i}
                   className={
-                    "w-[3vh] h-[3vh] flex justify-center items-center rounded-[4px] text-yellow-600 font-extrabold text-[0.9rem] border-b-[2px] select-none shadow " +
+                    "w-[3vw] h-[3vw] flex justify-center items-center rounded-[4px] text-yellow-600 font-extrabold text-[0.9rem] border-b-[2px] select-none shadow " +
                     (v === "T"
                       ? "bg-[#7f4f25] text-white border-[#c8a978]"
                       : v === "D"
