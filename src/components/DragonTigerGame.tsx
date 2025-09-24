@@ -143,7 +143,7 @@ export default function MyComponent() {
             width: "90vw",
             maxWidth: "430px",
             minWidth: "320px",
-            height: "90vh",
+            height: "100vh",
             maxHeight: "932px",
             minHeight: "500px",
             backgroundImage: `url(${casinoTable})`,
@@ -162,7 +162,7 @@ export default function MyComponent() {
           </div>
 
           {/* trand icon */}
-          <div className="absolute top-72 left-3 px-2 cursor-pointer z-30 text-[#450b00] rounded-full bg-yellow-700 border-yellow-500 border-y-2 select-none">
+          <div className="absolute top-[44.5vh] left-[6vh] px-2 cursor-pointer z-30 text-[#450b00] rounded-full bg-yellow-700 border-yellow-500 border-y-2 select-none">
             <MdTrendingUp size={20} />
           </div>
 
@@ -173,9 +173,9 @@ export default function MyComponent() {
 
           {/* timer */}
           <div
-            className="absolute top-60 flex items-center justify-center"
+            className="absolute top-[38vh] flex items-center justify-center"
             style={{
-              width: "10vw",
+              width: "12vw",
               height: "6.5vh",
               maxWidth: "60px",
               maxHeight: "45px",
@@ -199,12 +199,12 @@ export default function MyComponent() {
           >
 
             {/* Trend Bar */}
-            <div className="absolute top-72 right-20 flex items-center gap-1 flex-wrap justify-center flex-1 max-w-[140px]">
+            <div className="absolute top-[44.5vh] bg-red-600 right-[12vh] flex items-center gap-1 flex-wrap justify-center flex-1 max-w-[38vh]">
               {trends.map((v, i) => (
                 <div
                   key={i}
                   className={
-                    "w-5 h-5 flex justify-center items-center rounded-[4px] text-yellow-600 font-extrabold text-[0.9rem] border-b-[2px] select-none shadow " +
+                    "w-[3vh] h-[3vh] flex justify-center items-center rounded-[4px] text-yellow-600 font-extrabold text-[0.9rem] border-b-[2px] select-none shadow " +
                     (v === "T"
                       ? "bg-[#7f4f25] text-white border-[#c8a978]"
                       : v === "D"
@@ -219,7 +219,7 @@ export default function MyComponent() {
 
           </div>
 
-          {/* Dragon container on left */}
+          {/* Dragon animation on left */}
           <div
             className="creature-container animate-upDownImg"
             style={{
@@ -230,7 +230,7 @@ export default function MyComponent() {
             <img src={dragonBody} alt="Dragon" style={{ width: '100%', height: 'auto' }} />
           </div>
 
-          {/* Tiger container on right with flame effects */}
+          {/* Tiger animation on right with flame effects */}
           <div
             className="creature-container animate-upDownImg"
             style={{
@@ -247,12 +247,12 @@ export default function MyComponent() {
           </div>
 
           {/* user balance */}
-          <div className="absolute bottom-[2.1rem] left-[8.5rem] cursor-pointer z-40 text-[#ffe0da] rounded-full bg-[#5f1e11] border-[#5b6612] border-[1px] select-none  md:p-2">
-            <MdCurrencyRupee size={30} />
+          <div className="absolute bottom-[10vh] left-[28vw] cursor-pointer z-40 text-[#ffe0da] rounded-full bg-[#5f1e11] border-[#5b6612] border-[1px] select-none  md:p-2">
+            <MdCurrencyRupee size={20} />
           </div>
 
           <div
-            className="flex items-center gap-1 flex-wrap justify-center flex-1 absolute bottom-[1.6rem] left-36 cursor-pointer text-white rounded-3xl w-18 px-2  border-2 border-[#5f5c07] select-none"
+            className="flex items-start gap-1 flex-wrap  justify-center flex-1 absolute bottom-[6vh] left-[28vw] cursor-pointer text-white rounded-3xl w-[30vw]   border-2 border-[#5f5c07] select-none"
             style={{
               backgroundImage: `
                 repeating-linear-gradient(45deg, rgba(255,255,255,0.06) 0, rgba(255,255,255,0.06) 1px, transparent 1px, transparent 20px),
@@ -262,8 +262,8 @@ export default function MyComponent() {
               backgroundColor: "#000000"
             }}
           >
-            <h1 className="pl-12 p-3
-             font-bold text-sm md:text-lg">10.2</h1>
+            <h1 className=" pb-[4vh]
+             font-bold text-sm md:text-lg">105555.2</h1>
           </div>
 
           {/* Bottom chips bar */}
