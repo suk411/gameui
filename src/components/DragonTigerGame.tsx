@@ -163,12 +163,12 @@ export default function MyComponent() {
           </div>
 
           {/* trand icon */}
-          <div className="absolute top-[44.5vh] left-[2vw] px-[1vw]  z-30 text-[#450b00] rounded-full bg-yellow-700 border-yellow-500 border-y-2 select-none">
-            <MdTrendingUp size={20} />
+          <div className="absolute top-[44.7vh] left-[12vw] px-[1vw]  z-30 text-[#450b00] rounded-full bg-yellow-700 border-yellow-500 border-y-2 select-none">
+            <MdTrendingUp size={25} />
           </div>
 
           {/* new icon */}
-          <div className="absolute top-[44.5vh] right-[2vw] px-2  z-30 text-[#450b00] rounded-full bg-yellow-700 border-yellow-500 border-y-2 select-none">
+          <div className="absolute top-[42vh] right-[18.5vw]   z-400  text-[#450b00] rounded-t-full rounded-r-full bg-yellow-700 border-yellow-500 border-2 select-none">
             <MdOutlineFiberNew size={20} />
           </div>
 
@@ -196,13 +196,16 @@ export default function MyComponent() {
           </div>
 
           <div className="z-40 flex items-center justify-between px-4 py-2 rounded-xl shadow-lg max-w-[370px] mx-auto mb-4 bg-transparent">
+
+
+
             {/* Trend Bar */}
-            <div className="absolute top-[44.5vh] bg-black/40 py-[1vw] right-[25vw] flex items-center gap-1 flex-wrap border-blue-300 border-y justify-center flex-1 max-w-[38vh]">
+            <div className="absolute top-[44.5vh] bg-black/40 rounded-[1vw] p-[1vw] right-[22vw] flex items-center gap-1 flex-wrap border-blue-300 border-y justify-center flex-1 max-w-[38vh]">
               {trends.map((v, i) => (
                 <div
                   key={i}
                   className={
-                    "w-[3vw] h-[3vw] flex justify-center items-center rounded-[4px] text-yellow-600 font-extrabold text-[0.9rem] border-b-[2px] select-none shadow " +
+                    "w-[4vw] h-[4vw] flex justify-center items-center rounded-[4px] text-yellow-600 font-extrabold text-[0.9rem] border-b-[2px] select-none shadow " +
                     (v === "T"
                       ? "bg-[#7f4f25] text-white border-[#c8a978]"
                       : v === "D"
@@ -255,12 +258,12 @@ export default function MyComponent() {
           </div>
 
           {/* user balance */}
-          <div className="absolute bottom-[10vh] left-[28vw] cursor-pointer z-40 text-[#ffe0da] rounded-full bg-[#5f1e11] border-[#5b6612] border-[1px] select-none  md:p-2">
+          <div className="absolute bottom-[7.5vh] left-[35vw]  z-40 text-[#ffe0da] rounded-full bg-[#5f1e11] border-[#5b6612] border-[1px] select-none ">
             <MdCurrencyRupee size={20} />
           </div>
 
           <div
-            className="flex items-start gap-1 flex-wrap  justify-center flex-1 absolute bottom-[6vh] left-[28vw] cursor-pointer text-white rounded-3xl w-[30vw]   border-2 border-[#5f5c07] select-none"
+            className=" px-[5vw] flex-wrap  justify-center flex-1 absolute bottom-[4vh] left-[36vw]  text-white rounded-3xl w-[20vw]   border-2 border-[#5f5c07] select-none"
             style={{
               backgroundImage: `
                 repeating-linear-gradient(45deg, rgba(255,255,255,0.06) 0, rgba(255,255,255,0.06) 1px, transparent 1px, transparent 20px),
@@ -271,10 +274,10 @@ export default function MyComponent() {
             }}
           >
             <h1
-              className=" pb-[4vh]
-             font-bold text-sm md:text-lg"
+              className=" pb-[3vh]
+             font-bold text-sm text-center "
             >
-              105555.2
+              551524
             </h1>
           </div>
 
@@ -297,7 +300,7 @@ export default function MyComponent() {
                     key={chip.id}
                     src={chip.src}
                     alt={chip.alt}
-                    className={`w-[7vh] h-[7vh] cursor-pointer object-contain rounded-full ${
+                    className={`w-[7vh] h-[7vh] object-contain rounded-full ${
                       selectedChip === chip.id ? "pulse-zoom" : ""
                     }`}
                     onClick={() => setSelectedChip(chip.id)}
