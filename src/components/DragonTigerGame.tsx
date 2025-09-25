@@ -560,13 +560,11 @@ export default function MyComponent() {
 
 
 
-          {/* Bottom chips bar - responsive positioning */}
+          {/* Bottom chips bar - within image area, touching bottom */}
           <div 
-            className="fixed z-40 bottom-0 transform -translate-x-1/2"
+            className="absolute z-40 bottom-0 left-0 right-0"
             style={{
-              left: '50%',
               width: '100%',
-              maxWidth: `${containerSize.width}px`,
               zIndex: 20,
             }}
           >
@@ -590,8 +588,8 @@ export default function MyComponent() {
               <div 
                 className="flex justify-center flex-wrap"
                 style={{
-                  gap: `${containerSize.width * 0.06}px`,
-                  padding: `${containerSize.width * 0.02}px`,
+                  gap: `${containerSize.width * 0.04}px`,
+                  padding: `${containerSize.width * 0.015}px`,
                 }}
               >
                 {chips.map((chip) => (
@@ -603,8 +601,8 @@ export default function MyComponent() {
                       selectedChip === chip.id ? "pulse-zoom" : ""
                     }`}
                     style={{
-                      width: `${containerSize.width * 0.15}px`,
-                      height: `${containerSize.width * 0.15}px`,
+                      width: `${containerSize.width * 0.12}px`,
+                      height: `${containerSize.width * 0.12}px`,
                     }}
                     onClick={() => setSelectedChip(chip.id)}
                   />
