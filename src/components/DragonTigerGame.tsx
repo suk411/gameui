@@ -11,7 +11,7 @@ import chip50 from "../assets/chip-50.png";
 import chip100 from "../assets/chip-100.png";
 import chip500 from "../assets/chip-500.png";
 import chip10k from "../assets/chip-10k.png";
-import casinoTable from "../assets/casino-table.jpg";
+import casinoTable from "../assets/casino-table.png";
 import tigerBody from "../assets/tiger-body.png";
 import dragonBody from "../assets/dragon-body.png";
 import clockIcon from "../assets/clock-icon.png";
