@@ -21,6 +21,43 @@ export default function MyComponent() {
   const [timer, setTimer] = useState(15);
   const [phase, setPhase] = useState("play"); // "play" or "result"
   const [trendOpen, setTrendOpen] = useState(false);
+  const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
+
+  useEffect(() => {
+    const updateSize = () => {
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      
+      // Original image dimensions
+      const originalWidth = 460;
+      const originalHeight = 932;
+      const aspectRatio = originalWidth / originalHeight;
+      
+      // Calculate container size maintaining aspect ratio
+      let width = Math.min(vw, originalWidth);
+      let height = vh;
+      
+      // If width would be too small for viewport height, adjust
+      if (width / aspectRatio < vh) {
+        height = vh;
+        width = height * aspectRatio;
+      } else {
+        height = width / aspectRatio;
+      }
+      
+      // Don't exceed original dimensions
+      if (width > originalWidth) {
+        width = originalWidth;
+        height = originalHeight;
+      }
+      
+      setContainerSize({ width, height });
+    };
+    
+    updateSize();
+    window.addEventListener('resize', updateSize);
+    return () => window.removeEventListener('resize', updateSize);
+  }, []);
 
   const chips = [
     { id: 10, src: chip10, alt: "10" },
@@ -117,59 +154,81 @@ export default function MyComponent() {
         `}
       </style>
 
-      <div
-        className="bg-[#2b0d0d] flex items-center justify-center relative"
-        style={{
-          minHeight: "100vh",
-          minWidth: "100vw",
-          overflow: "hidden",
-        }}
-      >
-        {/* game  screen */}
+      <div className="bg-[#2b0d0d] flex items-center justify-center min-h-screen overflow-hidden">
+        {/* Responsive game container */}
         <div
-          className="relative  shadow-2xl border-2 border-red-500 flex flex-col justify-end items-center mx-auto overflow-hidden"
+          className="relative shadow-2xl border-2 border-red-500 flex flex-col justify-end items-center mx-auto overflow-hidden"
           style={{
-            width: "100vw", // fills viewport width
-            height: "100vh", // fills viewport height
-            maxWidth: "460px", // image's original width
-            maxHeight: "932px", // image's original height
+            width: `${containerSize.width}px`,
+            height: `${containerSize.height}px`,
             backgroundImage: `url(${casinoTable})`,
-            backgroundSize: "cover", // scales image without cropping
+            backgroundSize: "100% 100%",
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center",
           }}
         >
-          {/* Home icon */}
-          <div className="absolute top-[2vh] left-[2vw]  z-30 text-[#450b00] rounded-full bg-yellow-700 border-yellow-500 border-y-2 select-none p-[1vw] ">
-            <AiFillHome size={24} className="md:text-3xl" />
-          </div>
-
-          {/* other players icon */}
-          <div className="absolute top-[38vh] right-[3vw] +z-30 text-[rgb(253,155,137)] rounded-[8px] border-yellow-600 border-r-2 border-t-2 p-[1vw]  bg-[#450b00] select-none">
-            <FaUserAlt size={18} className="md:text-2xl" />
-          </div>
-
-          {/* trand icon updated with click */}
-          <div
-           
-            className="absolute top-[44vh] left-[16vw] px-[1vw]  z-30 text-[#450b00] rounded-full bg-yellow-700 border-yellow-500 border-y-2 select-none cursor-pointer"
-          >
-            <MdTrendingUp size={25} />
-          </div>
-
-          {/* new icon */}
-          <div className="absolute top-[42vh] right-[18.5vw]   z-400  text-[#450b00] rounded-t-full rounded-r-full bg-yellow-700 border-yellow-500 border-2 select-none">
-            <MdOutlineFiberNew size={20} />
-          </div>
-
-          {/* timer */}
-          <div
-            className="absolute top-[38vh] flex items-center justify-center"
+          {/* Home icon - responsive positioning */}
+          <div 
+            className="absolute z-30 text-[#450b00] rounded-full bg-yellow-700 border-yellow-500 border-y-2 select-none"
             style={{
-              width: "7vh",
-              height: "5vh",
-              maxWidth: "60px",
-              maxHeight: "45px",
+              top: `${2}%`,
+              left: `${2}%`,
+              padding: `${containerSize.width * 0.02}px`,
+            }}
+          >
+            <AiFillHome 
+              size={Math.max(16, containerSize.width * 0.05)} 
+              className="md:text-3xl" 
+            />
+          </div>
+
+          {/* Other players icon - responsive positioning */}
+          <div 
+            className="absolute z-30 text-[rgb(253,155,137)] rounded-[8px] border-yellow-600 border-r-2 border-t-2 bg-[#450b00] select-none"
+            style={{
+              top: `${40.8}%`,
+              right: `${3}%`,
+              padding: `${containerSize.width * 0.02}px`,
+            }}
+          >
+            <FaUserAlt 
+              size={Math.max(14, containerSize.width * 0.04)} 
+              className="md:text-2xl" 
+            />
+          </div>
+
+          {/* Trend icon - responsive positioning */}
+          <div
+            className="absolute z-30 text-[#450b00] rounded-full bg-yellow-700 border-yellow-500 border-y-2 select-none cursor-pointer"
+            style={{
+              top: `${47.2}%`,
+              left: `${16}%`,
+              padding: `${containerSize.width * 0.015}px`,
+            }}
+          >
+            <MdTrendingUp size={Math.max(20, containerSize.width * 0.055)} />
+          </div>
+
+          {/* New icon - responsive positioning */}
+          <div 
+            className="absolute z-400 text-[#450b00] rounded-t-full rounded-r-full bg-yellow-700 border-yellow-500 border-2 select-none"
+            style={{
+              top: `${45.1}%`,
+              right: `${18.5}%`,
+            }}
+          >
+            <MdOutlineFiberNew size={Math.max(16, containerSize.width * 0.044)} />
+          </div>
+
+          {/* Timer - responsive positioning */}
+          <div
+            className="absolute flex items-center justify-center"
+            style={{
+              top: `${40.8}%`,
+              left: '50%',
+              transform: 'translateX(-50%)',
+              width: `${containerSize.width * 0.13}px`,
+              height: `${containerSize.height * 0.054}px`,
               backgroundImage: `url(${clockIcon})`,
               backgroundSize: "100% 100%",
               backgroundRepeat: "no-repeat",
@@ -177,27 +236,45 @@ export default function MyComponent() {
             }}
           >
             <div
-              className=" flex items-center justify-center pt-[1vh] font-bold text-[1.2rem] text-[#443001] select-none"
-              style={{ backgroundColor: "transparent" }}
+              className="flex items-center justify-center font-bold text-[#443001] select-none"
+              style={{ 
+                backgroundColor: "transparent",
+                fontSize: `${Math.max(14, containerSize.width * 0.026)}px`,
+                paddingTop: `${containerSize.height * 0.01}px`
+              }}
             >
               {timer}
             </div>
           </div>
 
           <div className="z-40 flex items-center justify-between px-4 py-2 rounded-xl shadow-lg max-w-[370px] mx-auto mb-4 bg-transparent">
-            {/* Trend Bar */}
-            <div className="absolute top-[44.5vh] bg-black/40 rounded-[1vw] p-[1vw] right-[22vw] flex items-center gap-1 flex-wrap border-blue-300 border-y justify-center flex-1 max-w-[38vh]">
+            {/* Trend Bar - responsive positioning */}
+            <div 
+              className="absolute bg-black/40 rounded-lg flex items-center gap-1 flex-wrap border-blue-300 border-y justify-center flex-1"
+              style={{
+                top: `${47.8}%`,
+                right: `${22}%`,
+                padding: `${containerSize.width * 0.01}px`,
+                borderRadius: `${containerSize.width * 0.01}px`,
+                maxWidth: `${containerSize.width * 0.38}px`,
+              }}
+            >
               {trends.map((v, i) => (
                 <div
                   key={i}
                   className={
-                    "w-[4vw] h-[4vw] flex justify-center items-center rounded-[4px] text-yellow-600 font-extrabold text-[0.9rem] border-b-[2px] select-none shadow " +
+                    "flex justify-center items-center rounded-[4px] text-yellow-600 font-extrabold border-b-[2px] select-none shadow " +
                     (v === "T"
                       ? "bg-[#7f4f25] text-white border-[#c8a978]"
                       : v === "D"
                       ? "bg-[#326474] text-white border-[#93d7f8]"
                       : "bg-[#255e38] text-white border-[#43ad66]")
                   }
+                  style={{
+                    width: `${containerSize.width * 0.04}px`,
+                    height: `${containerSize.width * 0.04}px`,
+                    fontSize: `${Math.max(10, containerSize.width * 0.02)}px`,
+                  }}
                 >
                   {v}
                 </div>
@@ -205,12 +282,18 @@ export default function MyComponent() {
             </div>
           </div>
 
-          {/* Dragon animation on left */}
+          {/* Dragon animation on left - responsive positioning */}
           <div
-            className="creature-container animate-upDownImg"
+            className="absolute animate-upDownImg"
             style={{
               left: "2%",
-              height: "auto",
+              top: "20%",
+              width: `${containerSize.width * 0.25}px`,
+              maxWidth: "180px",
+              zIndex: 20,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "flex-end",
             }}
           >
             <img
@@ -220,12 +303,18 @@ export default function MyComponent() {
             />
           </div>
 
-          {/* Tiger animation on right with flame effects */}
+          {/* Tiger animation on right with flame effects - responsive positioning */}
           <div
-            className="creature-container animate-upDownImg"
+            className="absolute animate-upDownImg"
             style={{
               right: "2%",
-              height: "auto",
+              top: "20%",
+              width: `${containerSize.width * 0.25}px`,
+              maxWidth: "180px",
+              zIndex: 20,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "flex-end",
             }}
           >
             <img
@@ -235,7 +324,17 @@ export default function MyComponent() {
             />
             <div
               className="flame-container"
-              style={{ width: "100%", height: 140 * 3 }}
+              style={{ 
+                width: "100%", 
+                height: containerSize.height * 0.45,
+                position: "absolute",
+                bottom: 0,
+                left: "50%",
+                transform: "translateX(-50%)",
+                pointerEvents: "none",
+                zIndex: 16,
+                overflow: "visible"
+              }}
             >
               <div className="flame-particle"></div>
               <div className="flame-particle"></div>
@@ -243,14 +342,25 @@ export default function MyComponent() {
             </div>
           </div>
 
-          {/* user balance */}
-          <div className="absolute bottom-[7.2vh] left-[36vw]   z-50 text-[#ffe0da] rounded-[1vw] bg-[#5f1e11] border-[#5b6612] border-[1px] select-none ">
-            <MdCurrencyRupee size={20} />
+          {/* User balance - responsive positioning */}
+          <div 
+            className="absolute z-50 text-[#ffe0da] rounded-lg bg-[#5f1e11] border-[#5b6612] border select-none"
+            style={{
+              bottom: `${7.2}%`,
+              left: `${36}%`,
+              padding: `${containerSize.width * 0.008}px`,
+            }}
+          >
+            <MdCurrencyRupee size={Math.max(16, containerSize.width * 0.044)} />
           </div>
 
+          {/* Balance display - responsive positioning */}
           <div
-            className=" z-40 flex-wrap  justify-center flex-1 absolute bottom-[4vh] left-[40vw]  text-white rounded-3xl w-[20vw]   border-2 border-[#5f5c07] select-none"
+            className="z-40 flex-wrap justify-center flex-1 absolute text-white rounded-3xl border-2 border-[#5f5c07] select-none"
             style={{
+              bottom: `${4}%`,
+              left: `${40}%`,
+              width: `${20}%`,
               backgroundImage: `
                 repeating-linear-gradient(45deg, rgba(255,255,255,0.06) 0, rgba(255,255,255,0.06) 1px, transparent 1px, transparent 20px),
                 repeating-linear-gradient(-45deg, rgba(255,255,255,0.06) 0, rgba(255,255,255,0.06) 1px, transparent 1px, transparent 20px)
@@ -259,119 +369,190 @@ export default function MyComponent() {
               backgroundColor: "#000000",
             }}
           >
-            <h1 className=" pb-[3vh] font-bold text-sm text-center ">951888</h1>
+            <h1 
+              className="font-bold text-center"
+              style={{
+                paddingBottom: `${containerSize.height * 0.032}px`,
+                fontSize: `${Math.max(12, containerSize.width * 0.03)}px`,
+              }}
+            >
+              951888
+            </h1>
           </div>
 
-   {/* tie betting area */}
-<div className="absolute bottom-[35vh] w-[80vw] h-[15vh] rounded-xl border-blue-400 border-[0.5vw] bg-gradient-to-br from-emerald-900 to-teal-700 shadow-lg cursor-pointer select-none flex items-center justify-center">
+          {/* TIE betting area - responsive positioning */}
+          <div 
+            className="absolute rounded-xl border-blue-400 bg-gradient-to-br from-emerald-900 to-teal-700 shadow-lg cursor-pointer select-none flex items-center justify-center"
+            style={{
+              bottom: `${35}%`,
+              left: '10%',
+              width: `${80}%`,
+              height: `${15}%`,
+              borderWidth: `${containerSize.width * 0.005}px`,
+              borderRadius: `${containerSize.width * 0.026}px`,
+            }}
+          >
+            {/* Total bets count centered on top layer */}
+            <span
+              className="absolute text-emerald-100/65 font-bold bg-green-700 bg-opacity-40 rounded-b-sm select-none"
+              style={{
+                top: '2vh',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                zIndex: 9999,
+                padding: `0 ${containerSize.width * 0.08}px`,
+                fontSize: `${Math.max(12, containerSize.width * 0.03)}px`,
+              }}
+            >
+              0
+            </span>
 
-  {/* total bets count centered on top layer */}
-  <span
-    className="absolute  text -emerald-100/65 text-sm font-bold bg-green-700 bg-opacity-40 rounded-b-sm px-[8vw]  select-none"
-    style={{
-      top: '2vh',
-      left: '40vw',
-      transform: 'translate(-50%, -50%)',
-      zIndex: 9999,
-    }}
-  >
-    0
-  </span>
+            <div 
+              className="absolute rounded-xl bg-gradient-to-br from-emerald-700 to-cyan-700 opacity-20 blur-lg pointer-events-none"
+              style={{
+                inset: `-${containerSize.width * 0.05}px`,
+              }}
+            ></div>
 
-  <div className="absolute -inset-[5vw] rounded-xl bg-gradient-to-br from-emerald-700 to-cyan-700 opacity-20 blur-lg pointer-events-none"></div>
-
-  <div className="relative flex h-[13vh] w-[80vw] items-center justify-center rounded-xl bg-gradient-to-br from-emerald-800 to-teal-800">
-    <span
-      className="text-cyan-100 text-xl font-semibold tracking-wide"
-      style={{
-        textShadow: '0 2px 5px #0c4a6e',
-        opacity: 0.5,
-      }}
-    >
-      TIE x10
-    </span>
-  </div>
-
-</div>
-
-
-
- {/* dragon betting area */}
-<div className="absolute bottom-[9vh] left-[8vw] w-[40vw] h-[25vh] rounded-xl border-black border-[0.2vw] bg-gradient-to-br from-indigo-900 to-blue-700 shadow-lg cursor-pointer select-none flex items-center justify-center">
-
-  {/* total bets count centered on top layer */}
-  <span
-    className="absolute  text -emerald-100/65 text-sm font-bold bg-indigo-900 bg-opacity-40 rounded-b-sm px-[6vw]  select-none"
-    style={{
-      top: '2vh',
-      left: '17vw',
-      transform: 'translate(-50%, -50%)',
-      zIndex: 9999,
-    }}
-  >
-    0
-  </span>
-
-  <div className="relative -inset-[5vw] rounded-xl bg-gradient-to-br from-blue-700 to-sky-700 opacity-20  blur-lg pointer-events-none"></div>
-
-  <div className="relative flex h-[19vh] w-[80vw] items-center justify-center rounded-xl  bg-gradient-to-br from-blue-800  to-blue-800">
-   <span
-  className="text-blue-500 text-lg font-semibold tracking-wide"
-  style={{ 
-    opacity: 0.5, 
-    textShadow: '0 2px 0 black', 
-    display: 'inline-flex', 
-    flexDirection: 'column', 
-    alignItems: 'center' // optional, to center text horizontally
-  }}
->
-  <span>DRAGON</span>
-  <span>2x</span>
-</span>
-
-  </div>
-
-</div>
+            <div 
+              className="relative flex items-center justify-center rounded-xl bg-gradient-to-br from-emerald-800 to-teal-800"
+              style={{
+                height: '87%',
+                width: '100%',
+              }}
+            >
+              <span
+                className="text-cyan-100 font-semibold tracking-wide"
+                style={{
+                  textShadow: '0 2px 5px #0c4a6e',
+                  opacity: 0.5,
+                  fontSize: `${Math.max(16, containerSize.width * 0.044)}px`,
+                }}
+              >
+                TIE x10
+              </span>
+            </div>
+          </div>
 
 
 
- {/* tiger betting area */}
-<div className="absolute bottom-[9vh] right-[8vw] w-[40vw] h-[25vh] rounded-xl border-black border-[0.2vw] bg-gradient-to-br from-red-900 to-yellow-700 shadow-lg cursor-pointer select-none flex items-center justify-center">
+          {/* Dragon betting area - responsive positioning */}
+          <div 
+            className="absolute rounded-xl border-black bg-gradient-to-br from-indigo-900 to-blue-700 shadow-lg cursor-pointer select-none flex items-center justify-center"
+            style={{
+              bottom: `${9}%`,
+              left: `${8}%`,
+              width: `${40}%`,
+              height: `${25}%`,
+              borderWidth: `${containerSize.width * 0.002}px`,
+              borderRadius: `${containerSize.width * 0.026}px`,
+            }}
+          >
+            {/* Total bets count centered on top layer */}
+            <span
+              className="absolute text-emerald-100/65 font-bold bg-indigo-900 bg-opacity-40 rounded-b-sm select-none"
+              style={{
+                top: '2vh',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                zIndex: 9999,
+                padding: `0 ${containerSize.width * 0.06}px`,
+                fontSize: `${Math.max(12, containerSize.width * 0.03)}px`,
+              }}
+            >
+              0
+            </span>
 
-  {/* total bets count centered on top layer */}
-  <span
-    className="absolute  text -emerald-100/65 text-sm font-bold bg-red-900 bg-opacity-40 rounded-b-sm px-[6vw]  select-none"
-    style={{
-      top: '2vh',
-      left: '17vw',
-      transform: 'translate(-50%, -50%)',
-      zIndex: 9999,
-    }}
-  >
-    0
-  </span>
+            <div 
+              className="relative rounded-xl bg-gradient-to-br from-blue-700 to-sky-700 opacity-20 blur-lg pointer-events-none"
+              style={{
+                inset: `-${containerSize.width * 0.05}px`,
+              }}
+            ></div>
 
-  <div className="relative -inset-[5vw] rounded-xl bg-gradient-to-br from-red-700 to-yellow-700 opacity-20  blur-lg pointer-events-none"></div>
+            <div 
+              className="relative flex items-center justify-center rounded-xl bg-gradient-to-br from-blue-800 to-blue-800"
+              style={{
+                height: '76%',
+                width: '100%',
+              }}
+            >
+              <span
+                className="text-blue-500 font-semibold tracking-wide"
+                style={{ 
+                  opacity: 0.5, 
+                  textShadow: '0 2px 0 black', 
+                  display: 'inline-flex', 
+                  flexDirection: 'column', 
+                  alignItems: 'center',
+                  fontSize: `${Math.max(14, containerSize.width * 0.038)}px`,
+                }}
+              >
+                <span>DRAGON</span>
+                <span>2x</span>
+              </span>
+            </div>
+          </div>
 
-  <div className="relative flex h-[19vh] w-[80vw] items-center justify-center rounded-xl  bg-gradient-to-br from-yellow-800  to-red-800">
-  <span
-  className="text-yellow-500 text-lg font-semibold tracking-wide"
-  style={{ 
-    opacity: 0.5, 
-    textShadow: '0 2px 0 black', 
-    display: 'inline-flex', 
-    flexDirection: 'column', 
-    alignItems: 'center' // optional, to center text horizontally
-  }}
->
-  <span>TIGER</span>
-  <span>2x</span>
-</span>
+          {/* Tiger betting area - responsive positioning */}
+          <div 
+            className="absolute rounded-xl border-black bg-gradient-to-br from-red-900 to-yellow-700 shadow-lg cursor-pointer select-none flex items-center justify-center"
+            style={{
+              bottom: `${9}%`,
+              right: `${8}%`,
+              width: `${40}%`,
+              height: `${25}%`,
+              borderWidth: `${containerSize.width * 0.002}px`,
+              borderRadius: `${containerSize.width * 0.026}px`,
+            }}
+          >
+            {/* Total bets count centered on top layer */}
+            <span
+              className="absolute text-emerald-100/65 font-bold bg-red-900 bg-opacity-40 rounded-b-sm select-none"
+              style={{
+                top: '2vh',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                zIndex: 9999,
+                padding: `0 ${containerSize.width * 0.06}px`,
+                fontSize: `${Math.max(12, containerSize.width * 0.03)}px`,
+              }}
+            >
+              0
+            </span>
+
+            <div 
+              className="relative rounded-xl bg-gradient-to-br from-red-700 to-yellow-700 opacity-20 blur-lg pointer-events-none"
+              style={{
+                inset: `-${containerSize.width * 0.05}px`,
+              }}
+            ></div>
+
+            <div 
+              className="relative flex items-center justify-center rounded-xl bg-gradient-to-br from-yellow-800 to-red-800"
+              style={{
+                height: '76%',
+                width: '100%',
+              }}
+            >
+              <span
+                className="text-yellow-500 font-semibold tracking-wide"
+                style={{ 
+                  opacity: 0.5, 
+                  textShadow: '0 2px 0 black', 
+                  display: 'inline-flex', 
+                  flexDirection: 'column', 
+                  alignItems: 'center',
+                  fontSize: `${Math.max(14, containerSize.width * 0.038)}px`,
+                }}
+              >
+                <span>TIGER</span>
+                <span>2x</span>
+              </span>
+            </div>
+          </div>
 
 
-  </div>
-
-</div>
 
 
 
@@ -379,30 +560,52 @@ export default function MyComponent() {
 
 
 
-
-
-          {/* Bottom chips bar */}
-          <div className="fixed left-1/2 z-40 bottom-0 transform -translate-x-1/2 w-full max-w-[430px] z-20">
-            <div className="border-t-4   border-[#5f5c07]" />
+          {/* Bottom chips bar - responsive positioning */}
+          <div 
+            className="fixed z-40 bottom-0 transform -translate-x-1/2"
+            style={{
+              left: '50%',
+              width: '100%',
+              maxWidth: `${containerSize.width}px`,
+              zIndex: 20,
+            }}
+          >
+            <div 
+              className="border-t-4 border-[#5f5c07]" 
+              style={{
+                borderTopWidth: `${containerSize.width * 0.009}px`,
+              }}
+            />
             <div
-              className=" rounded-tl-lg rounded-tr-lg flex flex-col items-center  bg-black relative overflow-hidden border border-[#2b0d0d] rounded-t-none shadow-inner"
+              className="rounded-tl-lg rounded-tr-lg flex flex-col items-center bg-black relative overflow-hidden border border-[#2b0d0d] rounded-t-none shadow-inner"
               style={{
                 backgroundImage: `
                   repeating-linear-gradient(45deg, rgba(255,255,25,0.05) 0, rgba(25,255,255,0.05) 1px, transparent 1px, transparent 20px),
                   repeating-linear-gradient(-45deg, rgba(255,255,255,0.05) 0, rgba(255,255,255,0.05) 1px, transparent 1px, transparent 20px)
                 `,
                 backgroundSize: "25px 30px",
+                borderRadius: `${containerSize.width * 0.015}px ${containerSize.width * 0.015}px 0 0`,
               }}
             >
-              <div className="flex gap-[6vw] justify-center flex-wrap">
+              <div 
+                className="flex justify-center flex-wrap"
+                style={{
+                  gap: `${containerSize.width * 0.06}px`,
+                  padding: `${containerSize.width * 0.02}px`,
+                }}
+              >
                 {chips.map((chip) => (
                   <img
                     key={chip.id}
                     src={chip.src}
                     alt={chip.alt}
-                    className={`w-[7vh] h-[7vh] object-contain rounded-full ${
+                    className={`object-contain rounded-full ${
                       selectedChip === chip.id ? "pulse-zoom" : ""
                     }`}
+                    style={{
+                      width: `${containerSize.width * 0.15}px`,
+                      height: `${containerSize.width * 0.15}px`,
+                    }}
                     onClick={() => setSelectedChip(chip.id)}
                   />
                 ))}
