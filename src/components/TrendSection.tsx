@@ -14,9 +14,11 @@ export default function TrendSection() {
         <FaUserAlt size={16} />
       </div>
 
-      {/* Trend icon */}
-      {/* Removed duplicate trend icon */}
-
+      {/* New icon */}
+      <div className="game-element text-[#450b00] rounded-t-full rounded-r-full bg-yellow-700 border-yellow-500 border-2 select-none p-1"
+           style={{ top: '35%', left: '5%', zIndex: 400 }}>
+        <MdTrendingUp size={18} />
+      </div>
       {/* New icon */}
       <div className="game-element text-[#450b00] rounded-t-full rounded-r-full bg-yellow-700 border-yellow-500 border-2 select-none p-1"
            style={{ top: '45%', right: '37%', zIndex: 400 }}>
@@ -24,13 +26,13 @@ export default function TrendSection() {
       </div>
 
       {/* Trend Bar */}
-      <div className="game-element bg-black/40 rounded-lg p-2 flex items-center gap-1 flex-wrap border-blue-300 border-2 justify-center z-40"
-           style={{ top: '47.5%', right: '44%', width: '38%' }}>
+      <div className="game-element  p-1   bg-black/60   flex  items-center gap-1  border-yellow-600 border-y-2 justify-center z-40"
+           style={{ top: '47.5%', right: '18%', width: '60%' }}>
         {trends.map((v, i) => (
           <div
             key={i}
             className={
-              "w-6 h-6 flex justify-center items-center rounded text-xs font-extrabold border-b-2 select-none shadow " +
+              "w-5 h-4 flex   flex-wrap  text-[10px] justify-center items-center  font-bold text-yellow-200   select-none shadow " +
               (v === "T"
                 ? "bg-[#7f4f25] text-white border-[#c8a978]"
                 : v === "D"

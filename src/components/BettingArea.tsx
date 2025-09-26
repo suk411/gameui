@@ -78,7 +78,7 @@ export default function BettingArea({ timer }: BettingAreaProps) {
 
       {/* Dragon animation on left */}
       <div className="creature-container animate-upDownImg"
-           style={{ left: '2%' }}>
+           style={{ top:'5%', left: '2%' }}>
         <img
           src={dragonBody}
           alt="Dragon"
@@ -88,7 +88,7 @@ export default function BettingArea({ timer }: BettingAreaProps) {
 
       {/* Tiger animation on right with flame effects */}
       <div className="creature-container animate-upDownImg"
-           style={{ right: '2%' }}>
+           style={{ top:'6%', right: '2%' }}>
         <img
           src={tigerBody}
           alt="Tiger"
@@ -102,7 +102,7 @@ export default function BettingArea({ timer }: BettingAreaProps) {
       </div>
 
       {/* Clock centered below animation */}
-      <div className="absolute left-1/2" style={{ top: '18%', transform: 'translateX(-50%)' }}>
+      <div className="absolute left-1/2 " style={{ top: '9%', transform: 'translateX(-50%)' }}>
         <CountdownTimer initial={timer} />
       </div>
 

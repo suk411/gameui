@@ -27,7 +27,7 @@ export default function CountdownTimer({ initial, onEnd }: CountdownTimerProps) 
   }, [time, isFifteen, onEnd]);
 
   return (
-    <div className="flex flex-col items-center justify-center select-none">
+    <div className="flex  items-center justify-center select-none">
       <div
         className="relative flex items-center justify-center"
         style={{ width: 48, height: 48 }}

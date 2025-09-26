@@ -42,7 +42,7 @@ export default function BettingChips({ selectedChip, setSelectedChip, vertical }
             key={chip.id}
             src={chip.src}
             alt={chip.alt}
-            className={`w-12 h-12 object-contain rounded-full ${
+            className={`w-10 h-10 object-contain rounded-full ${
               selectedChip === chip.id ? "pulse-zoom" : ""
             }`}
             onClick={() => setSelectedChip(chip.id)}
