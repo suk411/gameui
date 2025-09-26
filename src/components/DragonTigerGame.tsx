@@ -30,8 +30,6 @@ export default function MyComponent() {
 
   const trends = ["T", "T", "T", "D", "T", "D", "T", "D", "D", "Ti"];
 
-  
-
   return (
     <>
       <style>
@@ -63,8 +61,8 @@ export default function MyComponent() {
             position: absolute;
             bottom: 0;
             left: 50%;
-            width: 90px;
-            height: 140px;
+            width: 18%;
+            height: 15%;
             transform: translateX(-50%);
             pointer-events: none;
             z-index: 16;
@@ -112,293 +110,257 @@ export default function MyComponent() {
             justify-content: center;
             align-items: flex-end;
           }
+          
+          /* Responsive Game Container */
+          .game-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            max-width: 100vw;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+          
+          /* Mobile viewport container - maintains aspect ratio */
+          .mobile-viewport {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            max-width: 500px; /* Max mobile width */
+            aspect-ratio: 9/18; /* Mobile aspect ratio */
+            background-image: url(${casinoTable});
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            overflow: hidden;
+          }
+          
+          /* Desktop: Center with mobile ratio */
+          @media (min-width: 768px) {
+            .game-container {
+              padding: 20px;
+            }
+            .mobile-viewport {
+              height: min(100vh - 40px, calc((500px) * 2));
+              width: min(500px, calc((100vh - 40px) / 2));
+              margin: 0 auto;
+            }
+          }
+          
+          /* All game elements use percentage positioning relative to container */
+          .game-element {
+            position: absolute;
+          }
         `}
       </style>
 
-      <div
-        className="bg-[#2b0d0d] flex items-center justify-center relative"
-        style={{
-          minHeight: "100vh",
-          minWidth: "100vw",
-          overflow: "hidden",
-        }}
-      >
-        {/* game  screen */}
-        <div
-          className="relative  shadow-2xl  flex flex-col justify-end items-center mx-auto overflow-hidden"
-          style={{
-            width: "100vw", // fills viewport width
-            height: "100vh", // fills viewport height
-            maxWidth: "460px", // image's original width
-            maxHeight: "932px", // image's original height
-            backgroundImage: `url(${casinoTable})`,
-            backgroundSize: "cover", // scales image without cropping
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center",
-          }}
-        >
+      <div className="game-container">
+        <div className="mobile-viewport">
           {/* Home icon */}
-          <div className="absolute top-[2vh] left-[2vw]  z-30 text-[#450b00] rounded-full bg-yellow-700 border-yellow-500 border-y-2 select-none p-[1vw] ">
-            <AiFillHome size={24} className="md:text-3xl" />
+          <div className="game-element text-[#450b00] rounded-full bg-yellow-700 border-yellow-500 border-2 select-none p-2 z-30" 
+               style={{ top: '3%', left: '4%' }}>
+            <AiFillHome size={20} />
           </div>
 
-          {/* other players icon */}
-          <div className="absolute top-[38vh] right-[3vw] +z-30 text-[rgb(253,155,137)] rounded-[8px] border-yellow-600 border-r-2 border-t-2 p-[1vw]  bg-[#450b00] select-none">
-            <FaUserAlt size={18} className="md:text-2xl" />
+          {/* Other players icon */}
+          <div className="game-element text-[rgb(253,155,137)] rounded-lg border-yellow-600 border-r-2 border-t-2 p-2 bg-[#450b00] select-none z-30"
+               style={{ top: '40%', right: '6%' }}>
+            <FaUserAlt size={16} />
           </div>
 
-          {/* trand icon updated with click */}
-          <div
-           
-            className="absolute top-[44vh] left-[16vw] px-[1vw]  z-30 text-[#450b00] rounded-full bg-yellow-700 border-yellow-500 border-y-2 select-none cursor-pointer"
-          >
-            <MdTrendingUp size={25} />
+          {/* Trend icon */}
+          <div className="game-element text-[#450b00] rounded-full bg-yellow-700 border-yellow-500 border-2 select-none cursor-pointer p-2 z-30"
+               style={{ top: '47%', left: '32%' }}>
+            <MdTrendingUp size={22} />
           </div>
 
-          {/* new icon */}
-          <div className="  top-[42vh] right-[18.5vw]   z-400  text-[#450b00] rounded-t-full rounded-r-full bg-yellow-700 border-yellow-500 border-2 select-none">
-            <MdOutlineFiberNew size={20} />
+          {/* New icon */}
+          <div className="game-element text-[#450b00] rounded-t-full rounded-r-full bg-yellow-700 border-yellow-500 border-2 select-none p-1"
+               style={{ top: '45%', right: '37%', zIndex: 400 }}>
+            <MdOutlineFiberNew size={18} />
           </div>
 
-          {/* timer */}
-          <div
-            className=" relative bottom-[60vh] flex items-center justify-center"
-            style={{
-              width: "12vh",
-              height: "9vh",
-              
-              backgroundImage: `url(${clockIcon})`,
-              backgroundSize: "100% 100%",
-              backgroundRepeat: "no-repeat",
-              backgroundPosition: "center",
-              zIndex: "9999",
-            }}
-          >
-            <div
-              className=" flex items-center justify-center pt-[2vh] font-bold text-[1.7rem] text-[#443001] select-none"
-              style={{ backgroundColor: "transparent" }}
-            >
+          {/* Timer */}
+          <div className="game-element flex items-center justify-center z-50"
+               style={{
+                 top: '8%',
+                 left: '50%',
+                 transform: 'translateX(-50%)',
+                 width: '15%',
+                 height: '9%',
+                 backgroundImage: `url(${clockIcon})`,
+                 backgroundSize: '100% 100%',
+                 backgroundRepeat: 'no-repeat',
+                 backgroundPosition: 'center',
+               }}>
+            <div className="flex items-center justify-center pt-2 font-bold text-lg text-[#443001] select-none">
               {timer}
             </div>
           </div>
 
-          <div className="z-40 flex items-center justify-between px-4 py-2 rounded-xl shadow-lg max-w-[370px] mx-auto mb-4 bg-transparent">
-            {/* Trend Bar */}
-            <div className="absolute top-[44.5vh] bg-black/40 rounded-[1vw] p-[1vw] right-[22vw] flex items-center gap-1 flex-wrap border-blue-300 border-y justify-center flex-1 max-w-[38vh]">
-              {trends.map((v, i) => (
-                <div
-                  key={i}
-                  className={
-                    "w-[4vw] h-[4vw] flex justify-center items-center rounded-[4px] text-yellow-600 font-extrabold text-[0.9rem] border-b-[2px] select-none shadow " +
-                    (v === "T"
-                      ? "bg-[#7f4f25] text-white border-[#c8a978]"
-                      : v === "D"
-                      ? "bg-[#326474] text-white border-[#93d7f8]"
-                      : "bg-[#255e38] text-white border-[#43ad66]")
-                  }
-                >
-                  {v}
-                </div>
-              ))}
-            </div>
+          {/* Trend Bar */}
+          <div className="game-element bg-black/40 rounded-lg p-2 flex items-center gap-1 flex-wrap border-blue-300 border-2 justify-center z-40"
+               style={{ top: '47.5%', right: '44%', width: '38%' }}>
+            {trends.map((v, i) => (
+              <div
+                key={i}
+                className={
+                  "w-6 h-6 flex justify-center items-center rounded text-xs font-extrabold border-b-2 select-none shadow " +
+                  (v === "T"
+                    ? "bg-[#7f4f25] text-white border-[#c8a978]"
+                    : v === "D"
+                    ? "bg-[#326474] text-white border-[#93d7f8]"
+                    : "bg-[#255e38] text-white border-[#43ad66]")
+                }
+              >
+                {v}
+              </div>
+            ))}
           </div>
 
           {/* Dragon animation on left */}
-          <div
-            className="creature-container animate-upDownImg"
-            style={{
-              left: "2%",
-              height: "auto",
-            }}
-          >
+          <div className="creature-container animate-upDownImg"
+               style={{ left: '2%' }}>
             <img
               src={dragonBody}
               alt="Dragon"
-              style={{ width: "100%", height: "auto" }}
+              style={{ width: '100%', height: 'auto' }}
             />
           </div>
 
           {/* Tiger animation on right with flame effects */}
-          <div
-            className="creature-container animate-upDownImg"
-            style={{
-              right: "2%",
-              height: "auto",
-            }}
-          >
+          <div className="creature-container animate-upDownImg"
+               style={{ right: '2%' }}>
             <img
               src={tigerBody}
               alt="Tiger"
-              style={{ width: "100%", height: "auto" }}
+              style={{ width: '100%', height: 'auto' }}
             />
-            <div
-              className="flame-container"
-              style={{ width: "100%", height: 140 * 3 }}
-            >
+            <div className="flame-container">
               <div className="flame-particle"></div>
               <div className="flame-particle"></div>
               <div className="flame-particle"></div>
             </div>
           </div>
 
-          {/* user balance */}
-          <div className="absolute bottom-[7.2vh] left-[36vw]   z-50 text-[#ffe0da] rounded-[1vw] bg-[#5f1e11] border-[#5b6612] border-[1px] select-none ">
-            <MdCurrencyRupee size={20} />
+          {/* User balance icon */}
+          <div className="game-element text-[#ffe0da] rounded-lg bg-[#5f1e11] border-[#5b6612] border select-none p-1 z-50"
+               style={{ bottom: '14%', left: '72%' }}>
+            <MdCurrencyRupee size={18} />
           </div>
 
-          <div
-            className=" z-20 flex-wrap  justify-center flex-1 absolute bottom-[4vh] left-[40vw]  text-white rounded-3xl w-[20vw]   border-2 border-[#5f5c07] select-none"
-            style={{
-              backgroundImage: `
-                repeating-linear-gradient(45deg, rgba(255,255,255,0.06) 0, rgba(255,255,255,0.06) 1px, transparent 1px, transparent 20px),
-                repeating-linear-gradient(-45deg, rgba(255,255,255,0.06) 0, rgba(255,255,255,0.06) 1px, transparent 1px, transparent 20px)
-              `,
-              backgroundSize: "20px 20px",
-              backgroundColor: "#000000",
-            }}
-          >
-            <h1 className="  pb-[3vh] font-bold text-sm text-center ">951888</h1>
+          {/* User balance display */}
+          <div className="game-element text-white rounded-3xl border-2 border-[#5f5c07] select-none flex items-center justify-center text-sm font-bold z-20"
+               style={{
+                 bottom: '8%',
+                 left: '60%',
+                 width: '35%',
+                 height: '5%',
+                 backgroundImage: `
+                   repeating-linear-gradient(45deg, rgba(255,255,255,0.06) 0, rgba(255,255,255,0.06) 1px, transparent 1px, transparent 20px),
+                   repeating-linear-gradient(-45deg, rgba(255,255,255,0.06) 0, rgba(255,255,255,0.06) 1px, transparent 1px, transparent 20px)
+                 `,
+                 backgroundSize: '20px 20px',
+                 backgroundColor: '#000000',
+               }}>
+            951888
           </div>
 
-   {/* tie betting area */}
-<div className="z-10 absolute bottom-[35vh] w-[80vw] h-[15vh] rounded-xl border-blue-400 border-[0.5vw] bg-gradient-to-br from-emerald-900 to-teal-700 shadow-lg cursor-pointer select-none flex items-center justify-center">
+          {/* Tie betting area */}
+          <div className="game-element rounded-xl border-blue-400 border-4 bg-gradient-to-br from-emerald-900 to-teal-700 shadow-lg cursor-pointer select-none flex items-center justify-center z-10"
+               style={{ bottom: '38%', left: '10%', width: '80%', height: '16%' }}>
+            {/* Total bets count */}
+            <span className="absolute text-emerald-100/65 text-sm font-bold bg-green-700 bg-opacity-40 rounded-b-sm px-8 select-none z-20"
+                  style={{
+                    top: '10%',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                  }}>
+              0
+            </span>
+            <div className="absolute -inset-4 rounded-xl bg-gradient-to-br from-emerald-700 to-cyan-700 opacity-20 blur-lg pointer-events-none"></div>
+            <div className="relative flex h-full w-full items-center justify-center rounded-xl bg-gradient-to-br from-emerald-800 to-teal-800">
+              <span className="text-cyan-100 text-xl font-semibold tracking-wide"
+                    style={{
+                      textShadow: '0 2px 5px #0c4a6e',
+                      opacity: 0.5,
+                    }}>
+                TIE x10
+              </span>
+            </div>
+          </div>
 
-  {/* total bets count centered on top layer */}
-  <span
-    className="absolute  text -emerald-100/65 text-sm font-bold bg-green-700 bg-opacity-40 rounded-b-sm px-[8vw]  select-none"
-    style={{
-      top: '2vh',
-      left: '40vw',
-      transform: 'translate(-50%, -50%)',
-      zIndex: 20,
-    }}
-  >
-    0
-  </span>
+          {/* Dragon betting area */}
+          <div className="game-element rounded-xl border-black border-2 bg-gradient-to-br from-indigo-900 to-blue-700 shadow-lg cursor-pointer select-none flex items-center justify-center z-10"
+               style={{ bottom: '10%', left: '16%', width: '32%', height: '27%' }}>
+            {/* Total bets count */}
+            <span className="absolute text-emerald-100/65 text-sm font-bold bg-indigo-900 bg-opacity-40 rounded-b-sm px-6 select-none z-20"
+                  style={{
+                    top: '8%',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                  }}>
+              0
+            </span>
+            <div className="relative -inset-4 rounded-xl bg-gradient-to-br from-blue-700 to-sky-700 opacity-20 blur-lg pointer-events-none"></div>
+            <div className="relative flex h-full w-full items-center justify-center rounded-xl bg-gradient-to-br from-blue-800 to-blue-800">
+              <span className="text-blue-500 text-lg font-semibold tracking-wide flex flex-col items-center"
+                    style={{ 
+                      opacity: 0.5, 
+                      textShadow: '0 2px 0 black'
+                    }}>
+                <span>DRAGON</span>
+                <span>2x</span>
+              </span>
+            </div>
+          </div>
 
-  <div className="absolute -inset-[5vw] rounded-xl bg-gradient-to-br from-emerald-700 to-cyan-700 opacity-20 blur-lg pointer-events-none"></div>
-
-  <div className="relative flex h-[13vh] w-[80vw] items-center justify-center rounded-xl bg-gradient-to-br from-emerald-800 to-teal-800">
-    <span
-      className="text-cyan-100 text-xl font-semibold tracking-wide"
-      style={{
-        textShadow: '0 2px 5px #0c4a6e',
-        opacity: 0.5,
-      }}
-    >
-      TIE x10
-    </span>
-  </div>
-
-</div>
-
-
-
- {/* dragon betting area */}
-<div className=" z-10 absolute bottom-[9vh] left-[8vw] w-[40vw] h-[25vh] rounded-xl border-black border-[0.2vw] bg-gradient-to-br from-indigo-900 to-blue-700 shadow-lg cursor-pointer select-none flex items-center justify-center">
-
-  {/* total bets count centered on top layer */}
-  <span
-    className="absolute  text -emerald-100/65 text-sm font-bold bg-indigo-900 bg-opacity-40 rounded-b-sm px-[6vw]  select-none"
-    style={{
-      top: '2vh',
-      left: '17vw',
-      transform: 'translate(-50%, -50%)',
-      zIndex: 20,
-    }}
-  >
-    0
-  </span>
-
-  <div className="relative -inset-[5vw] rounded-xl bg-gradient-to-br from-blue-700 to-sky-700 opacity-20  blur-lg pointer-events-none"></div>
-
-  <div className="relative flex h-[19vh] w-[80vw] items-center justify-center rounded-xl  bg-gradient-to-br from-blue-800  to-blue-800">
-   <span
-  className="text-blue-500 text-lg font-semibold tracking-wide"
-  style={{ 
-    opacity: 0.5, 
-    textShadow: '0 2px 0 black', 
-    display: 'inline-flex', 
-    flexDirection: 'column', 
-    alignItems: 'center' // optional, to center text horizontally
-  }}
->
-  <span>DRAGON</span>
-  <span>2x</span>
-</span>
-
-  </div>
-
-</div>
-
-
-
- {/* tiger betting area */}
-<div className="absolute bottom-[9vh] right-[8vw] w-[40vw] h-[25vh] rounded-xl border-black border-[0.2vw] bg-gradient-to-br from-red-900 to-yellow-700 shadow-lg cursor-pointer select-none flex items-center justify-center">
-
-  {/* total bets count centered on top layer */}
-  <span
-    className="absolute  text -emerald-100/65 text-sm font-bold bg-red-900 bg-opacity-40 rounded-b-sm px-[6vw]  select-none"
-    style={{
-      top: '2vh',
-      left: '17vw',
-      transform: 'translate(-50%, -50%)',
-      zIndex: 10,
-    }}
-  >
-    0
-  </span>
-
-  <div className="relative -inset-[5vw] rounded-xl bg-gradient-to-br from-red-700 to-yellow-700 opacity-20  blur-lg pointer-events-none"></div>
-
-  <div className="relative flex h-[19vh] w-[80vw] items-center justify-center rounded-xl  bg-gradient-to-br from-yellow-800  to-red-800">
-  <span
-  className="text-yellow-500 text-lg font-semibold tracking-wide"
-  style={{ 
-    opacity: 0.5, 
-    textShadow: '0 2px 0 black', 
-    display: 'inline-flex', 
-    flexDirection: 'column', 
-    alignItems: 'center' // optional, to center text horizontally
-  }}
->
-  <span>TIGER</span>
-  <span>2x</span>
-</span>
-
-
-  </div>
-
-</div>
-
-
-
-
-
-
-
-
+          {/* Tiger betting area */}
+          <div className="game-element rounded-xl border-black border-2 bg-gradient-to-br from-red-900 to-yellow-700 shadow-lg cursor-pointer select-none flex items-center justify-center"
+               style={{ bottom: '10%', right: '16%', width: '32%', height: '27%', zIndex: 10 }}>
+            {/* Total bets count */}
+            <span className="absolute text-emerald-100/65 text-sm font-bold bg-red-900 bg-opacity-40 rounded-b-sm px-6 select-none z-20"
+                  style={{
+                    top: '8%',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                  }}>
+              0
+            </span>
+            <div className="relative -inset-4 rounded-xl bg-gradient-to-br from-red-700 to-yellow-700 opacity-20 blur-lg pointer-events-none"></div>
+            <div className="relative flex h-full w-full items-center justify-center rounded-xl bg-gradient-to-br from-yellow-800 to-red-800">
+              <span className="text-yellow-500 text-lg font-semibold tracking-wide flex flex-col items-center"
+                    style={{ 
+                      opacity: 0.5, 
+                      textShadow: '0 2px 0 black'
+                    }}>
+                <span>TIGER</span>
+                <span>2x</span>
+              </span>
+            </div>
+          </div>
 
           {/* Bottom chips bar */}
-          <div className="fixed left-1/2 bottom-0 transform -translate-x-1/2 w-full max-w-[430px] z-20">
-            <div className="border-t-4   border-[#5f5c07]" />
-            <div
-              className=" rounded-tl-lg rounded-tr-lg flex flex-col items-center  bg-black relative overflow-hidden border border-[#2b0d0d] rounded-t-none shadow-inner"
-              style={{
-                backgroundImage: `
-                  repeating-linear-gradient(45deg, rgba(255,255,25,0.05) 0, rgba(25,255,255,0.05) 1px, transparent 1px, transparent 20px),
-                  repeating-linear-gradient(-45deg, rgba(255,255,255,0.05) 0, rgba(255,255,255,0.05) 1px, transparent 1px, transparent 20px)
-                `,
-                backgroundSize: "25px 30px",
-              }}
-            >
-              <div className="flex gap-[6vw] justify-center flex-wrap">
+          <div className="game-element w-full z-20"
+               style={{ bottom: '0%', left: '0%' }}>
+            <div className="border-t-4 border-[#5f5c07]" />
+            <div className="rounded-tl-lg rounded-tr-lg flex flex-col items-center bg-black relative overflow-hidden border border-[#2b0d0d] rounded-t-none shadow-inner"
+                 style={{
+                   backgroundImage: `
+                     repeating-linear-gradient(45deg, rgba(255,255,25,0.05) 0, rgba(25,255,255,0.05) 1px, transparent 1px, transparent 20px),
+                     repeating-linear-gradient(-45deg, rgba(255,255,255,0.05) 0, rgba(255,255,255,0.05) 1px, transparent 1px, transparent 20px)
+                   `,
+                   backgroundSize: "25px 30px",
+                 }}>
+              <div className="flex gap-8 justify-center flex-wrap py-2">
                 {chips.map((chip) => (
                   <img
                     key={chip.id}
                     src={chip.src}
                     alt={chip.alt}
-                    className={`w-[7vh] h-[7vh] object-contain rounded-full ${
+                    className={`w-12 h-12 object-contain rounded-full ${
                       selectedChip === chip.id ? "pulse-zoom" : ""
                     }`}
                     onClick={() => setSelectedChip(chip.id)}
@@ -407,8 +369,6 @@ export default function MyComponent() {
               </div>
             </div>
           </div>
-
-         
         </div>
       </div>
     </>
