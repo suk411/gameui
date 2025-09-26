@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import casinoTable from "../assets/casino-table.png";
 import TopBar from "./TopBar";
-import BettingArea from "./BettingArea";
+import GameBoard from "./GameBoard";
 import BottomBar from "./BottomBar";
 
 export default function DragonTigerGame() {
@@ -65,9 +65,7 @@ export default function DragonTigerGame() {
       {/* Main gameboard centered */}
       <div className="game-container" style={{ justifyContent: 'center', alignItems: 'center', display: 'flex', minHeight: '100vh' }}>
         <div className="mobile-viewport" style={{ margin: '0 auto', position: 'relative' }}>
-          <div className="relative w-full h-full">
-            <BettingArea timer={timer} />
-          </div>
+          <GameBoard timer={timer} />
         </div>
       </div>
 

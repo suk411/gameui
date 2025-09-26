@@ -15,10 +15,7 @@ export default function TrendSection() {
       </div>
 
       {/* Trend icon */}
-      <div className="game-element text-[#450b00] rounded-full bg-yellow-700 border-yellow-500 border-2 select-none cursor-pointer p-2 z-30"
-           style={{ top: '47%', left: '32%' }}>
-        <MdTrendingUp size={22} />
-      </div>
+      {/* Removed duplicate trend icon */}
 
       {/* New icon */}
       <div className="game-element text-[#450b00] rounded-t-full rounded-r-full bg-yellow-700 border-yellow-500 border-2 select-none p-1"

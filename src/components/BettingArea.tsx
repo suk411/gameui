@@ -106,11 +106,7 @@ export default function BettingArea({ timer }: BettingAreaProps) {
         <CountdownTimer initial={timer} />
       </div>
 
-      {/* Trend section below clock */}
-      <div className="absolute left-0 right-0" style={{ top: '32%' }}>
-        <TrendSection />
-      </div>
-
+   
       {/* Tie betting area */}
       <div className="game-element rounded-xl border-blue-400 border-4 bg-gradient-to-br from-emerald-900 to-teal-700 shadow-lg cursor-pointer select-none flex items-center justify-center z-10"
            style={{ bottom: '38%', left: '10%', width: '80%', height: '16%' }}>
@@ -137,7 +133,7 @@ export default function BettingArea({ timer }: BettingAreaProps) {
 
       {/* Dragon betting area */}
       <div className="game-element rounded-xl border-black border-2 bg-gradient-to-br from-indigo-900 to-blue-700 shadow-lg cursor-pointer select-none flex items-center justify-center z-10"
-           style={{ bottom: '10%', left: '16%', width: '32%', height: '27%' }}>
+           style={{ bottom: '10%', left: '16%', width: '32%', height: '10%' }}>
         {/* Total bets count */}
         <span className="absolute text-emerald-100/65 text-sm font-bold bg-indigo-900 bg-opacity-40 rounded-b-sm px-6 select-none z-20"
               style={{
@@ -162,7 +158,7 @@ export default function BettingArea({ timer }: BettingAreaProps) {
 
       {/* Tiger betting area */}
       <div className="game-element rounded-xl border-black border-2 bg-gradient-to-br from-red-900 to-yellow-700 shadow-lg cursor-pointer select-none flex items-center justify-center"
-           style={{ bottom: '10%', right: '16%', width: '32%', height: '27%', zIndex: 10 }}>
+           style={{ bottom: '10%', right: '16%', width: '32%', height: '10%', zIndex: 10 }}>
         {/* Total bets count */}
         <span className="absolute text-emerald-100/65 text-sm font-bold bg-red-900 bg-opacity-40 rounded-b-sm px-6 select-none z-20"
               style={{
