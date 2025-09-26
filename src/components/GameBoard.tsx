@@ -1,6 +1,7 @@
 import React from "react";
 import casinoTable from "../assets/casino-table.png";
 import TopBar from "./TopBar";
+import CountdownTimer from "./CountdownTimer";
 import TrendSection from "./TrendSection";
 import BettingArea from "./BettingArea";
 import BottomBar from "./BottomBar";
@@ -69,12 +70,24 @@ export default function GameBoard({ selectedChip, setSelectedChip, timer }: Game
         `}
       </style>
 
-      <div className="game-container">
-        <div className="mobile-viewport">
-          <TopBar timer={timer} />
-          <TrendSection />
-          <BettingArea />
+      {/* Home button fixed at top left, outside gameboard */}
+      <div className="fixed top-4 left-4 z-50">
+        <TopBar />
+      </div>
+
+      {/* Main gameboard centered */}
+      <div className="game-container" style={{ justifyContent: 'center', alignItems: 'center', display: 'flex', minHeight: '100vh' }}>
+        <div className="mobile-viewport" style={{ margin: '0 auto', position: 'relative' }}>
+          {/* Arrange: dragon/tiger animation at very top, clock below, then other elements */}
+          <div className="relative w-full h-full">
+            {/* BettingArea contains animation, clock, trend, betting zones */}
+            <BettingArea timer={timer} />
+          </div>
         </div>
+      </div>
+
+      {/* Chips and user balance fixed at bottom, outside gameboard */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 flex flex-col items-center">
         <BottomBar selectedChip={selectedChip} setSelectedChip={setSelectedChip} />
       </div>
     </>

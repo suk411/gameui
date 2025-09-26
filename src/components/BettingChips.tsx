@@ -8,9 +8,10 @@ import chip10k from "../assets/chip-10k.png";
 interface BettingChipsProps {
   selectedChip: number | null;
   setSelectedChip: (chip: number | null) => void;
+  vertical?: boolean;
 }
 
-export default function BettingChips({ selectedChip, setSelectedChip }: BettingChipsProps) {
+export default function BettingChips({ selectedChip, setSelectedChip, vertical }: BettingChipsProps) {
   const chips = [
     { id: 10, src: chip10, alt: "10" },
     { id: 50, src: chip50, alt: "50" },
@@ -35,30 +36,18 @@ export default function BettingChips({ selectedChip, setSelectedChip }: BettingC
         `}
       </style>
 
-      <div className="w-full max-w-[367px]">
-        <div className="border-t-4 border-[#5f5c07]" />
-        <div className="rounded-tl-lg rounded-tr-lg flex flex-col items-center bg-black relative overflow-hidden border border-[#2b0d0d] rounded-t-none shadow-inner"
-             style={{
-               backgroundImage: `
-                 repeating-linear-gradient(45deg, rgba(255,255,25,0.05) 0, rgba(25,255,255,0.05) 1px, transparent 1px, transparent 20px),
-                 repeating-linear-gradient(-45deg, rgba(255,255,255,0.05) 0, rgba(255,255,255,0.05) 1px, transparent 1px, transparent 20px)
-               `,
-               backgroundSize: "25px 30px",
-             }}>
-          <div className="flex gap-8 justify-center flex-wrap py-2">
-            {chips.map((chip) => (
-              <img
-                key={chip.id}
-                src={chip.src}
-                alt={chip.alt}
-                className={`w-12 h-12 object-contain rounded-full ${
-                  selectedChip === chip.id ? "pulse-zoom" : ""
-                }`}
-                onClick={() => setSelectedChip(chip.id)}
-              />
-            ))}
-          </div>
-        </div>
+      <div className={vertical ? "flex flex-row gap-2 items-center" : "flex gap-4 justify-center flex-wrap  w-full"}>
+        {chips.map((chip) => (
+          <img
+            key={chip.id}
+            src={chip.src}
+            alt={chip.alt}
+            className={`w-12 h-12 object-contain rounded-full ${
+              selectedChip === chip.id ? "pulse-zoom" : ""
+            }`}
+            onClick={() => setSelectedChip(chip.id)}
+          />
+        ))}
       </div>
     </>
   );

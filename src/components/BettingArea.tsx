@@ -1,10 +1,16 @@
-import React from "react";
-import tigerBody from "../assets/tiger-body.png";
 import dragonBody from "../assets/dragon-body.png";
+import tigerBody from "../assets/tiger-body.png";
 
-export default function BettingArea() {
+import CountdownTimer from "./CountdownTimer";
+import TrendSection from "./TrendSection";
+
+interface BettingAreaProps {
+  timer: number;
+}
+
+export default function BettingArea({ timer }: BettingAreaProps) {
   return (
-    <>
+    <div className="relative w-full h-full">
       <style>
         {`
           @keyframes upDownImg {
@@ -58,7 +64,7 @@ export default function BettingArea() {
           }
           .creature-container {
             position: absolute;
-            top: 20%;
+            top: 0%;
             width: 25%;
             max-width: 180px;
             user-select: none;
@@ -93,6 +99,16 @@ export default function BettingArea() {
           <div className="flame-particle"></div>
           <div className="flame-particle"></div>
         </div>
+      </div>
+
+      {/* Clock centered below animation */}
+      <div className="absolute left-1/2" style={{ top: '18%', transform: 'translateX(-50%)' }}>
+        <CountdownTimer initial={timer} />
+      </div>
+
+      {/* Trend section below clock */}
+      <div className="absolute left-0 right-0" style={{ top: '32%' }}>
+        <TrendSection />
       </div>
 
       {/* Tie betting area */}
@@ -168,6 +184,6 @@ export default function BettingArea() {
           </span>
         </div>
       </div>
-    </>
+    </div>
   );
 }
