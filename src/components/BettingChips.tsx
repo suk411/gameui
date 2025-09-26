@@ -22,19 +22,8 @@ export default function BettingChips({ selectedChip, setSelectedChip, vertical }
 
   return (
     <>
-      <style>
-        {`
-          .pulse-zoom {
-            animation: pulseScale 1s ease-in-out infinite;
-            border-radius: 9999px;
-            border: 2px solid #FFD700;
-          }
-          @keyframes pulseScale {
-            0%, 100% { transform: scale(1.03); box-shadow: 0 0 2px 2px #FFD700; }
-            50% { transform: scale(1.08); box-shadow: 0 0 3px 4px #FFD700; }
-          }
-        `}
-      </style>
+      
+      
 
       <div className={vertical ? "flex flex-row gap-2 items-center" : "flex gap-4 justify-center flex-wrap  w-full"}>
         {chips.map((chip) => (

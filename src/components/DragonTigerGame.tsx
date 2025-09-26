@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import casinoTable from "../assets/casino-table.png";
 import TopBar from "./TopBar";
-import GameBoard from "./GameBoard";
+import BettingArea from "./BettingArea";
+
 import BottomBar from "./BottomBar";
 
 export default function DragonTigerGame() {
@@ -33,6 +34,7 @@ export default function DragonTigerGame() {
             position: relative;
             width: 100%;
             height: 100%;
+            minWidth: 329px; 
             max-width: 367px;
             aspect-ratio: 9/18;
             background-image: url(${casinoTable});
@@ -63,10 +65,15 @@ export default function DragonTigerGame() {
       </div>
 
       {/* Main gameboard centered */}
-      <div className="game-container" style={{ justifyContent: 'center', alignItems: 'center', display: 'flex', minHeight: '100vh' }}>
-        <div className="mobile-viewport" style={{ margin: '0 auto', position: 'relative' }}>
-          <GameBoard timer={timer} />
+      <div className="game-container" style={{  justifyContent: 'center', alignItems: 'center', display: 'flex', minHeight: '100vh', minWidth: '329px' }}>
+        <div className="mobile-viewport" style={{  
+          margin: '0 auto', position: 'relative' }}>
+
+          
+          {/* Betting area and animations */}
+          <BettingArea timer={timer} />
         </div>
+        
       </div>
 
       {/* Chips and user balance fixed at bottom, outside gameboard */}

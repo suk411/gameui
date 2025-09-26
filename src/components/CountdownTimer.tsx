@@ -30,15 +30,15 @@ export default function CountdownTimer({ initial, onEnd }: CountdownTimerProps) 
     <div className="flex  items-center justify-center select-none">
       <div
         className="relative flex items-center justify-center"
-        style={{ width: 48, height: 48 }}
+        style={{ width: 65, height: 48 }}
       >
         <img
           src={clockIcon}
           alt="Clock"
-          style={{ width: 48, height: 48 }}
+          style={{ width: 70, height: 48 }}
         />
         <span
-          className="absolute inset-0 flex items-center justify-center font-bold text-lg text-[#443001]"
+          className="absolute pl-1 pb-1 inset-0 flex items-end justify-center font-bold text-lg text-[#443001]"
         >
           {time}
         </span>
