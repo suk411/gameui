@@ -25,13 +25,13 @@ export default function BettingChips({ selectedChip, setSelectedChip, vertical }
       
       
 
-      <div className={vertical ? "flex flex-row gap-2 items-center" : "flex gap-4 justify-center flex-wrap  w-full"}>
+      <div className={vertical ? "flex flex-row gap-2 items-center" : "flex gap-5 justify-center flex-wrap mb-2 w-full"}>
         {chips.map((chip) => (
           <img
             key={chip.id}
             src={chip.src}
             alt={chip.alt}
-            className={`w-10 h-10 object-contain rounded-full ${
+            className={`w-12 h-12 object-contain rounded-full ${
               selectedChip === chip.id ? "pulse-zoom" : ""
             }`}
             onClick={() => setSelectedChip(chip.id)}

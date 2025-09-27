@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import casinoTable from "../assets/casino-table.png";
+import casinoTable from "../assets/image.png";
 import TopBar from "./TopBar";
 import BettingArea from "./BettingArea";
 
