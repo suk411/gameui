@@ -50,26 +50,30 @@ function GameCards({ currentPhase, timeRemaining }: GameCardsProps) {
 
   useEffect(() => {
     if (currentPhase === 'betting') {
-      // Reset cards for new round
+      // Betting phase (15 seconds): cards stay face down
       setFlipped([false, false]);
       setWinner(null);
-      const card1 = randomCard();
-      const card2 = randomCard();
-      setCards([card1, card2]);
+      // Generate new cards for next round
+      if (timeRemaining === 15) {
+        const card1 = randomCard();
+        const card2 = randomCard();
+        setCards([card1, card2]);
+      }
     } else if (currentPhase === 'revealing') {
-      // Flip cards one by one during reveal phase (10 seconds)
-      if (timeRemaining <= 8 && timeRemaining > 6) {
-        // First card flips at 8 seconds remaining
+      // Result phase (10 seconds total)
+      if (timeRemaining <= 10 && timeRemaining > 7) {
+        // First 3 seconds (10-7s): flip first card
         setFlipped([true, false]);
-      } else if (timeRemaining <= 4 && timeRemaining > 2) {
-        // Second card flips at 4 seconds remaining  
+        setWinner(null);
+      } else if (timeRemaining <= 7 && timeRemaining > 2) {
+        // Next 5 seconds (7-2s): flip second card and show winner effects
         setFlipped([true, true]);
-        // Determine winner
+        // Determine and show winner
         if (cards[0].value > cards[1].value) setWinner(0);
         else if (cards[1].value > cards[0].value) setWinner(1);
         else setWinner(null); // tie
       } else if (timeRemaining <= 2) {
-        // Flip back in last 2 seconds
+        // Last 2 seconds (2-0s): flip cards back to rest position
         setFlipped([false, false]);
         setWinner(null);
       }
