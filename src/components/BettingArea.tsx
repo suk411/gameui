@@ -1,14 +1,22 @@
 import dragonBody from "../assets/dragon-body.png";
 import tigerBody from "../assets/tiger-body.png";
-import GameCards from "./cards";
+import GameCards, { GameCardsProps } from "./cards";
 import CountdownTimer from "./CountdownTimer";
 import TrendSection from "./TrendSection";
+import { useState } from "react";
 
 interface BettingAreaProps {
   timer: number;
 }
 
 export default function BettingArea({ timer }: BettingAreaProps) {
+  const [currentPhase, setCurrentPhase] = useState<'betting' | 'revealing'>('betting');
+  const [timeRemaining, setTimeRemaining] = useState(timer);
+
+  const handlePhaseChange = (phase: 'betting' | 'revealing', time: number) => {
+    setCurrentPhase(phase);
+    setTimeRemaining(time);
+  };
   return (
     <div className="relative w-full h-full">
       <style>
@@ -104,7 +112,7 @@ export default function BettingArea({ timer }: BettingAreaProps) {
 
       {/* Clock centered below animation */}
       <div className="absolute left-1/2 " style={{ top: '29%', transform: 'translateX(-50%)' }}>
-        <CountdownTimer initial={timer} />
+        <CountdownTimer initial={timer} onPhaseChange={handlePhaseChange} />
       </div>
 
 
@@ -118,7 +126,7 @@ export default function BettingArea({ timer }: BettingAreaProps) {
       {/*  cards */}
 
       <div className="  absolute left-1/2" style={{ top: '15%', transform: 'translateX(-50%)' }}>
-				<GameCards />
+				<GameCards currentPhase={currentPhase} timeRemaining={timeRemaining} />
         </div>
 
 

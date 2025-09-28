@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
+import SVGCard from "./SVGCard";
 
 const CARD_VALUES = [1,2,3,4,5,6,7,8,9,10,11,12,13];
-const CARD_NAMES = { 1: "A", 11: "J", 12: "Q", 13: "K" };
 const SUITS = [
   { name: "Spades", symbol: "♠", color: "black" },
   { name: "Hearts", symbol: "♥", color: "red" },
@@ -16,63 +16,74 @@ function randomCard() {
   };
 }
 
-function Card({ value, suit, flipped, winner }) {
-  const displayValue = CARD_NAMES[value] || value;
+interface CardProps {
+  value: number;
+  suit: { name: string; symbol: string; color: string };
+  flipped: boolean;
+  winner: boolean;
+}
+
+function Card({ value, suit, flipped, winner }: CardProps) {
   return (
     <div className="card-wrapper">
       <div className={`card ${flipped ? "flipped" : ""} ${winner ? "winner" : ""}`}>
-        <div className="card-face card-back"></div>
+        <div className="card-face card-back">
+          <SVGCard value={value} suit={suit} isBack={true} />
+        </div>
         <div className="card-face card-front">
-          <div className="card-corner" style={{ color: suit.color }}>
-            {displayValue}
-            <br />
-            {suit.symbol}
-          </div>
-          <div className="card-suit-center" style={{ color: suit.color }}>
-            {suit.symbol}
-          </div>
+          <SVGCard value={value} suit={suit} isBack={false} />
         </div>
       </div>
     </div>
   );
 }
 
-function GameCards() {
+interface GameCardsProps {
+  currentPhase: 'betting' | 'revealing';
+  timeRemaining: number;
+}
+
+function GameCards({ currentPhase, timeRemaining }: GameCardsProps) {
   const [cards, setCards] = useState([randomCard(), randomCard()]);
   const [flipped, setFlipped] = useState([false, false]);
-  const [winner, setWinner] = useState(null);
+  const [winner, setWinner] = useState<number | null>(null);
 
   useEffect(() => {
-    const playRound = () => {
+    if (currentPhase === 'betting') {
+      // Reset cards for new round
       setFlipped([false, false]);
       setWinner(null);
-      setTimeout(() => {
-        const card1 = randomCard();
-        const card2 = randomCard();
-        setCards([card1, card2]);
-        setTimeout(() => setFlipped([true, false]), 500);
-        setTimeout(() => setFlipped([true, true]), 1500);
-        setTimeout(() => {
-          if (card1.value > card2.value) setWinner(0);
-          else if (card2.value > card1.value) setWinner(1);
-        }, 2500);
-        setTimeout(() => setFlipped([false, false]), 6000);
-      }, 500);
-    };
-
-    playRound();
-    const interval = setInterval(playRound, 25000);
-    return () => clearInterval(interval);
-  }, []);
+      const card1 = randomCard();
+      const card2 = randomCard();
+      setCards([card1, card2]);
+    } else if (currentPhase === 'revealing') {
+      // Flip cards one by one during reveal phase (10 seconds)
+      if (timeRemaining <= 8 && timeRemaining > 6) {
+        // First card flips at 8 seconds remaining
+        setFlipped([true, false]);
+      } else if (timeRemaining <= 4 && timeRemaining > 2) {
+        // Second card flips at 4 seconds remaining  
+        setFlipped([true, true]);
+        // Determine winner
+        if (cards[0].value > cards[1].value) setWinner(0);
+        else if (cards[1].value > cards[0].value) setWinner(1);
+        else setWinner(null); // tie
+      } else if (timeRemaining <= 2) {
+        // Flip back in last 2 seconds
+        setFlipped([false, false]);
+        setWinner(null);
+      }
+    }
+  }, [currentPhase, timeRemaining, cards]);
 
   return (
     <>
       <style>{`
         .card-wrapper {
           perspective: 1200px;
-          width: 90px;
-          height: 130px;
-          margin: 8px;
+          width: 63px;
+          height: 91px;
+          margin: 6px;
         }
         .card {
           position: relative;
@@ -80,7 +91,7 @@ function GameCards() {
           height: 100%;
           transform-style: preserve-3d;
           transition: transform 1s;
-          border-radius: 12px;
+          border-radius: 8px;
         }
         .card.flipped {
           transform: rotateY(180deg);
@@ -90,53 +101,27 @@ function GameCards() {
           width: 100%;
           height: 100%;
           backface-visibility: hidden;
-          border-radius: 12px;
-          border: 2px solid #fff;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.13);
+          border-radius: 8px;
           display: flex;
-          align-items: flex-start;
-          justify-content: flex-start;
-          background: linear-gradient(180deg, #fff, #f9f9f9 90%);
+          align-items: center;
+          justify-content: center;
         }
         .card-back {
-          background: repeating-linear-gradient(
-            45deg,
-            #b30000,
-            #b30000 12px,
-            #7a0000 12px,
-            #7a0000 24px
-          );
+          transform: rotateY(0deg);
         }
         .card-front {
           transform: rotateY(180deg);
-          flex-direction: column;
         }
-        .card-corner {
-          position: absolute;
-          left: 12px;
-          top: 10px;
-          font-size: 1.25rem;
-          font-weight: bold;
-          text-align: left;
-          line-height: 1.1;
+        .card-svg {
+          filter: drop-shadow(0 2px 8px rgba(0,0,0,0.13));
         }
-        .card-suit-center {
-          position: absolute;
-          left: 50%;
-          top: 58%;
-          transform: translate(-50%, -50%);
-          font-size: 2.9rem;
-          font-weight: 600;
-          opacity: 0.97;
-          pointer-events: none;
-        }
-        .winner {
+        .winner .card-svg {
           animation: glowZoom 0.6s ease-in-out 2;
         }
         @keyframes glowZoom {
-          0% { transform: scale(1) rotateY(180deg); box-shadow: 0 0 0 0; }
-          50% { transform: scale(1.09) rotateY(180deg); box-shadow: 0 0 18px 4px gold; }
-          100% { transform: scale(1) rotateY(180deg); box-shadow: 0 0 0 0; }
+          0% { transform: scale(1); filter: drop-shadow(0 2px 8px rgba(0,0,0,0.13)); }
+          50% { transform: scale(1.09); filter: drop-shadow(0 0 18px 4px gold); }
+          100% { transform: scale(1); filter: drop-shadow(0 2px 8px rgba(0,0,0,0.13)); }
         }
       `}</style>
       <div className="flex gap-24 justify-center items-center bg-transparent">
@@ -148,3 +133,4 @@ function GameCards() {
 }
 
 export default GameCards;
+export type { GameCardsProps };

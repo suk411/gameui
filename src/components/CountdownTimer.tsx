@@ -4,16 +4,25 @@ import clockIcon from "../assets/clock-icon.png";
 interface CountdownTimerProps {
   initial: number;
   onEnd?: () => void;
+  onPhaseChange?: (phase: 'betting' | 'revealing', timeRemaining: number) => void;
 }
 
-export default function CountdownTimer({ initial, onEnd }: CountdownTimerProps) {
+export default function CountdownTimer({ initial, onEnd, onPhaseChange }: CountdownTimerProps) {
   const [time, setTime] = useState(initial);
-  const [isFifteen, setIsFifteen] = useState(true); // true: 15s, false: 10s
+  const [isFifteen, setIsFifteen] = useState(true); // true: 15s betting, false: 10s revealing
 
   useEffect(() => {
     if (time > 0) {
       const interval = setInterval(() => {
-        setTime((prev) => (prev > 0 ? prev - 1 : 0));
+        setTime((prev) => {
+          const newTime = prev > 0 ? prev - 1 : 0;
+          // Notify parent about current phase and time
+          if (onPhaseChange) {
+            const phase = isFifteen ? 'betting' : 'revealing';
+            onPhaseChange(phase, newTime);
+          }
+          return newTime;
+        });
       }, 1000);
       return () => clearInterval(interval);
     } else {
@@ -24,7 +33,7 @@ export default function CountdownTimer({ initial, onEnd }: CountdownTimerProps) 
         if (onEnd) onEnd();
       }, 1000);
     }
-  }, [time, isFifteen, onEnd]);
+  }, [time, isFifteen, onEnd, onPhaseChange]);
 
   return (
     <div className="flex  items-center justify-center select-none">
