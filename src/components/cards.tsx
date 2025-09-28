@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import SVGCard from "./SVGCard";
+import cardBack from "../assets/cards/card-back.svg";
 
 const CARD_VALUES = [1,2,3,4,5,6,7,8,9,10,11,12,13];
 const SUITS = [
-  { name: "Spades", symbol: "♠", color: "black" },
-  { name: "Hearts", symbol: "♥", color: "red" },
-  { name: "Clubs", symbol: "♣", color: "black" },
-  { name: "Diamonds", symbol: "♦", color: "red" }
+  { name: "spades", symbol: "♠", color: "black" },
+  { name: "hearts", symbol: "♥", color: "red" },
+  { name: "clubs", symbol: "♣", color: "black" },
+  { name: "diamonds", symbol: "♦", color: "red" }
 ];
 
 function randomCard() {
@@ -14,6 +14,19 @@ function randomCard() {
     value: CARD_VALUES[Math.floor(Math.random() * CARD_VALUES.length)],
     suit: SUITS[Math.floor(Math.random() * SUITS.length)]
   };
+}
+
+function getCardImage(value: number, suit: { name: string }) {
+  const valueNames = { 1: "ace", 11: "jack", 12: "queen", 13: "king" };
+  const cardName = valueNames[value as keyof typeof valueNames] || value.toString();
+  
+  // Fallback to a generic card if specific card doesn't exist
+  try {
+    return new URL(`../assets/cards/${cardName}-${suit.name}.svg`, import.meta.url).href;
+  } catch {
+    // Fallback to ace of spades if card doesn't exist
+    return new URL(`../assets/cards/ace-spades.svg`, import.meta.url).href;
+  }
 }
 
 interface CardProps {
@@ -28,10 +41,10 @@ function Card({ value, suit, flipped, winner }: CardProps) {
     <div className="card-wrapper">
       <div className={`card ${flipped ? "flipped" : ""} ${winner ? "winner" : ""}`}>
         <div className="card-face card-back">
-          <SVGCard value={value} suit={suit} isBack={true} />
+          <img src={cardBack} alt="Card back" className="card-image" />
         </div>
         <div className="card-face card-front">
-          <SVGCard value={value} suit={suit} isBack={false} />
+          <img src={getCardImage(value, suit)} alt={`${value} of ${suit.name}`} className="card-image" />
         </div>
       </div>
     </div>
@@ -116,10 +129,13 @@ function GameCards({ currentPhase, timeRemaining }: GameCardsProps) {
         .card-front {
           transform: rotateY(180deg);
         }
-        .card-svg {
-          filter: drop-shadow(0 2px 8px rgba(0,0,0,0.13));
+        .card-image {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius: 8px;
         }
-        .winner .card-svg {
+        .winner .card-image {
           animation: glowZoom 0.6s ease-in-out 2;
         }
         @keyframes glowZoom {
