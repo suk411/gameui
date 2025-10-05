@@ -14,13 +14,110 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      bets: {
+        Row: {
+          amount: number
+          bet_type: string
+          created_at: string
+          id: string
+          payout: number | null
+          round_id: string
+          session_id: string
+        }
+        Insert: {
+          amount: number
+          bet_type: string
+          created_at?: string
+          id?: string
+          payout?: number | null
+          round_id: string
+          session_id: string
+        }
+        Update: {
+          amount?: number
+          bet_type?: string
+          created_at?: string
+          id?: string
+          payout?: number | null
+          round_id?: string
+          session_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bets_round_id_fkey"
+            columns: ["round_id"]
+            isOneToOne: false
+            referencedRelation: "game_rounds"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      game_rounds: {
+        Row: {
+          betting_ends_at: string
+          completed_at: string | null
+          created_at: string
+          dragon_card: string | null
+          id: string
+          revealing_ends_at: string | null
+          round_number: number
+          status: string
+          tiger_card: string | null
+          winner: string | null
+        }
+        Insert: {
+          betting_ends_at: string
+          completed_at?: string | null
+          created_at?: string
+          dragon_card?: string | null
+          id?: string
+          revealing_ends_at?: string | null
+          round_number?: number
+          status?: string
+          tiger_card?: string | null
+          winner?: string | null
+        }
+        Update: {
+          betting_ends_at?: string
+          completed_at?: string | null
+          created_at?: string
+          dragon_card?: string | null
+          id?: string
+          revealing_ends_at?: string | null
+          round_number?: number
+          status?: string
+          tiger_card?: string | null
+          winner?: string | null
+        }
+        Relationships: []
+      }
+      player_balances: {
+        Row: {
+          balance: number
+          session_id: string
+          updated_at: string
+        }
+        Insert: {
+          balance?: number
+          session_id: string
+          updated_at?: string
+        }
+        Update: {
+          balance?: number
+          session_id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      calculate_payouts: {
+        Args: { round_uuid: string }
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never
