@@ -1,9 +1,13 @@
 import React from "react";
 import { MdCurrencyRupee } from "react-icons/md";
 
-export default function UserBalance() {
+interface UserBalanceProps {
+  balance: number;
+}
+
+export default function UserBalance({ balance }: UserBalanceProps) {
   return (
-    <div className="flex items-center justify-center   w-full ">
+    <div className="flex items-center justify-center w-full">
       <div className="flex items-center gap-">
         {/* User balance icon */}
         <div className="text-[#ffe0da] rounded-lg bg-[#5f1e11] border-[#5b6612] border select-none p-1">
@@ -11,7 +15,7 @@ export default function UserBalance() {
         </div>
 
         {/* User balance display */}
-        <div className="text-white rounded-3xl border-2 border-[#5f5c07] select-none flex items-center justify-center text-sm font-bold px-4 "
+        <div className="text-white rounded-3xl border-2 border-[#5f5c07] select-none flex items-center justify-center text-sm font-bold px-4"
              style={{
                backgroundImage: `
                  repeating-linear-gradient(45deg, rgba(255,255,255,0.06) 0, rgba(255,255,255,0.06) 1px, transparent 1px, transparent 20px),
@@ -20,7 +24,7 @@ export default function UserBalance() {
                backgroundSize: '20px 20px',
                backgroundColor: '#000000',
              }}>
-          951888
+          {balance.toLocaleString()}
         </div>
       </div>
     </div>

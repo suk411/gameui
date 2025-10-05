@@ -91,7 +91,7 @@ function GameCards({ currentPhase, timeRemaining }: GameCardsProps) {
         setWinner(null);
       }
     }
-  }, [currentPhase, timeRemaining, cards]);
+  }, [currentPhase, timeRemaining]);
 
   return (
     <>

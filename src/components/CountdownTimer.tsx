@@ -12,28 +12,28 @@ export default function CountdownTimer({ initial, onEnd, onPhaseChange }: Countd
   const [isFifteen, setIsFifteen] = useState(true); // true: 15s betting, false: 10s revealing
 
   useEffect(() => {
+    const phase = isFifteen ? 'betting' : 'revealing';
+    if (onPhaseChange) {
+      onPhaseChange(phase, time);
+    }
+  }, [isFifteen, time, onPhaseChange]);
+
+  useEffect(() => {
     if (time > 0) {
       const interval = setInterval(() => {
-        setTime((prev) => {
-          const newTime = prev > 0 ? prev - 1 : 0;
-          // Notify parent about current phase and time
-          if (onPhaseChange) {
-            const phase = isFifteen ? 'betting' : 'revealing';
-            onPhaseChange(phase, newTime);
-          }
-          return newTime;
-        });
+        setTime((prev) => prev - 1);
       }, 1000);
       return () => clearInterval(interval);
     } else {
       // When timer hits 0, alternate between 15 and 10 seconds
-      setTimeout(() => {
+      const timeout = setTimeout(() => {
         setIsFifteen((prev) => !prev);
         setTime(isFifteen ? 10 : 15);
         if (onEnd) onEnd();
       }, 1000);
+      return () => clearTimeout(timeout);
     }
-  }, [time, isFifteen, onEnd, onPhaseChange]);
+  }, [time, isFifteen, onEnd]);
 
   return (
     <div className="flex  items-center justify-center select-none">

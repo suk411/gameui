@@ -6,9 +6,10 @@ import UserBalance from "./UserBalance";
 interface BottomBarProps {
   selectedChip: number | null;
   setSelectedChip: (chip: number | null) => void;
+  balance: number;
 }
 
-export default function BottomBar({ selectedChip, setSelectedChip }: BottomBarProps) {
+export default function BottomBar({ selectedChip, setSelectedChip, balance }: BottomBarProps) {
   return (
     <div className="fixed bottom-0 left-0 right-0 z-30 flex flex-col items-center">
       <div
@@ -23,8 +24,8 @@ export default function BottomBar({ selectedChip, setSelectedChip }: BottomBarPr
         }}
       >
         {/* User balance left-aligned */}
-        <div className="  flex items-center justify-center" style={{ minWidth: 10 }}>
-          <UserBalance />
+        <div className="flex items-center justify-center" style={{ minWidth: 10 }}>
+          <UserBalance balance={balance} />
         </div>
         {/* Chips horizontal row centered and spaced evenly */}
         <div className="  ">

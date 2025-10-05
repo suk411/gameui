@@ -1,16 +1,21 @@
 import React, { useState } from "react";
 import casinoTable from "../assets/image.png";
 import TopBar from "./TopBar";
-import BettingArea from "./BettingArea";
-
+import BettingAreaWithBets from "./BettingAreaWithBets";
 import BottomBar from "./BottomBar";
+import { useGameManager } from "@/hooks/useGameManager";
+import GameRoundManager from "./GameRoundManager";
+import { Toaster } from "@/components/ui/toaster";
 
 export default function DragonTigerGame() {
   const [selectedChip, setSelectedChip] = useState<number | null>(null);
-  const [timer, setTimer] = useState(15);
+  const [timer] = useState(15);
+  const { balance } = useGameManager();
 
   return (
     <>
+      <GameRoundManager />
+      <Toaster />
       <style>
         {`
           html, body, #root {
@@ -71,14 +76,14 @@ export default function DragonTigerGame() {
 
           
           {/* Betting area and animations */}
-          <BettingArea timer={timer} />
+          <BettingAreaWithBets timer={timer} selectedChip={selectedChip} />
         </div>
         
       </div>
 
       {/* Chips and user balance fixed at bottom, outside gameboard */}
       <div className="fixed bottom-0 left-0 right-0 z-50 flex flex-col items-center">
-        <BottomBar selectedChip={selectedChip} setSelectedChip={setSelectedChip} />
+        <BottomBar selectedChip={selectedChip} setSelectedChip={setSelectedChip} balance={balance} />
       </div>
     </>
   );
