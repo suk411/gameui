@@ -28,28 +28,18 @@ export default function BettingAreaWithBets({ timer, selectedChip }: BettingArea
   const handleBetClick = async (betType: string) => {
     if (!selectedChip) {
       toast({
-        title: "Select a chip",
-        description: "Please select a chip amount before placing a bet",
-        variant: "destructive",
+        
       });
       return;
     }
 
     if (currentPhase !== 'betting') {
-      toast({
-        title: "Betting closed",
-        description: "Betting is only allowed during betting phase",
-        variant: "destructive",
-      });
+     
       return;
     }
 
     if (balance < selectedChip) {
-      toast({
-        title: "Insufficient balance",
-        description: "You don't have enough balance to place this bet",
-        variant: "destructive",
-      });
+     
       return;
     }
 
@@ -61,16 +51,9 @@ export default function BettingAreaWithBets({ timer, selectedChip }: BettingArea
     const success = await placeBet(betType, selectedChip);
     
     if (success) {
-      toast({
-        title: "Bet placed!",
-        description: `₹${selectedChip.toLocaleString()} on ${betType.toUpperCase()}`,
-      });
+      
     } else {
-      toast({
-        title: "Bet failed",
-        description: "Could not place bet. Please try again.",
-        variant: "destructive",
-      });
+     
     }
   };
 
