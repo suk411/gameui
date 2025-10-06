@@ -47,7 +47,7 @@ export default function CountdownTimer({ initial, onEnd, onPhaseChange }: Countd
           style={{ width: 70, height: 48 }}
         />
         <span
-          className="absolute pl-1 pb-1 inset-0 flex items-end justify-center font-bold text-lg text-[#443001]"
+          className="absolute pl-[1vrm] pb-[1vrm] inset-0 flex items-end justify-center font-bold text-lg text-[#443001]"
         >
           {time}
         </span>
