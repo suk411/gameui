@@ -19,14 +19,7 @@ function randomCard() {
 function getCardImage(value: number, suit: { name: string }) {
   const valueNames = { 1: "ace", 11: "jack", 12: "queen", 13: "king" };
   const cardName = valueNames[value as keyof typeof valueNames] || value.toString();
-  
-  // Fallback to a generic card if specific card doesn't exist
-  try {
-    return new URL(`../assets/cards/${cardName}-${suit.name}.svg`, import.meta.url).href;
-  } catch {
-    // Fallback to ace of spades if card doesn't exist
-    return new URL(`../assets/cards/ace-spades.svg`, import.meta.url).href;
-  }
+  return new URL(`../assets/cards/${cardName}-${suit.name}.svg`, import.meta.url).href;
 }
 
 interface CardProps {
@@ -37,14 +30,16 @@ interface CardProps {
 }
 
 function Card({ value, suit, flipped, winner }: CardProps) {
+  const cardImage = getCardImage(value, suit);
+  
   return (
     <div className="card-wrapper">
       <div className={`card ${flipped ? "flipped" : ""} ${winner ? "winner" : ""}`}>
         <div className="card-face card-back">
-          <img src={cardBack} alt="Card back" className="card-image" />
+          <img src={cardBack} alt="Card back" className="card-image" draggable="false" />
         </div>
         <div className="card-face card-front">
-          <img src={getCardImage(value, suit)} alt={`${value} of ${suit.name}`} className="card-image" />
+          <img src={cardImage} alt={`${value} of ${suit.name}`} className="card-image" draggable="false" />
         </div>
       </div>
     </div>

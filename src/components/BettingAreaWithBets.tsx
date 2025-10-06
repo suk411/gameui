@@ -26,20 +26,7 @@ export default function BettingAreaWithBets({ timer, selectedChip }: BettingArea
   };
 
   const handleBetClick = async (betType: string) => {
-    if (!selectedChip) {
-      toast({
-        
-      });
-      return;
-    }
-
-    if (currentPhase !== 'betting') {
-     
-      return;
-    }
-
-    if (balance < selectedChip) {
-     
+    if (!selectedChip || currentPhase !== 'betting' || balance < selectedChip) {
       return;
     }
 
@@ -48,13 +35,7 @@ export default function BettingAreaWithBets({ timer, selectedChip }: BettingArea
     setAnimations(prev => [...prev, { id: animId, targetId: betType, amount: selectedChip }]);
 
     // Place bet
-    const success = await placeBet(betType, selectedChip);
-    
-    if (success) {
-      
-    } else {
-     
-    }
+    await placeBet(betType, selectedChip);
   };
 
   const removeAnimation = (id: string) => {
@@ -140,7 +121,7 @@ export default function BettingAreaWithBets({ timer, selectedChip }: BettingArea
 
       {/* Dragon animation on left */}
       <div className="creature-container animate-upDownImg"
-           style={{ top:'3%', left: '2%' }}>
+           style={{ top:'3%', left: '5%' }}>
         <img
           src={dragonBody}
           alt="Dragon"
@@ -150,7 +131,7 @@ export default function BettingAreaWithBets({ timer, selectedChip }: BettingArea
 
       {/* Tiger animation on right with flame effects */}
       <div className="creature-container animate-upDownImg"
-           style={{ top:'3.7%', right: '2%' }}>
+           style={{ top:'3.7%', right: '5%' }}>
         <img
           src={tigerBody}
           alt="Tiger"
@@ -180,13 +161,13 @@ export default function BettingAreaWithBets({ timer, selectedChip }: BettingArea
 
       {/* Tie betting area */}
       <div 
-        className="game-element rounded-xl border-blue-400 border-4 bg-gradient-to-br from-emerald-900 to-teal-700 shadow-lg cursor-pointer select-none flex items-center justify-center z-10 hover:scale-105 transition-transform"
+        className="game-element rounded-xl border-blue-400 border-4 bg-gradient-to-br from-emerald-900 to-teal-700 shadow-lg cursor-pointer select-none flex items-center justify-center z-10"
         style={{ bottom: '38%', left: '10%', width: '80%', height: '16%' }}
         onClick={() => handleBetClick('tie')}
       >
-        <span className="absolute text-emerald-100/65 text-sm font-bold bg-green-700 bg-opacity-40 rounded-b-sm px-8 select-none z-20"
+        <span className="absolute text-emerald-100/65 text-xs font-semibold bg-green-700 bg-opacity-40 rounded-b-sm px-4 select-none z-20"
               style={{ top: '0%', left: '50%', transform: 'translateX(-50%)' }}>
-          ₹{getTotalBets('tie').toLocaleString()}
+          {getTotalBets('tie').toLocaleString()}
         </span>
         <div className="absolute -inset-4 rounded-xl bg-gradient-to-br from-emerald-700 to-cyan-700 opacity-20 blur-lg pointer-events-none"></div>
         <div className="relative flex h-full w-full items-center justify-center rounded-xl bg-gradient-to-br from-emerald-800 to-teal-800">
@@ -199,13 +180,13 @@ export default function BettingAreaWithBets({ timer, selectedChip }: BettingArea
 
       {/* Dragon betting area */}
       <div 
-        className="game-element rounded-xl border-black border-2 bg-gradient-to-br from-indigo-900 to-blue-700 shadow-lg cursor-pointer select-none flex items-center justify-center z-10 hover:scale-105 transition-transform"
+        className="game-element rounded-xl border-black border-2 bg-gradient-to-br from-indigo-900 to-blue-700 shadow-lg cursor-pointer select-none flex items-center justify-center z-10"
         style={{ bottom: '10%', left: '13%', width: '37%', height: '27%' }}
         onClick={() => handleBetClick('dragon')}
       >
-        <span className="absolute text-emerald-100/65 text-sm font-bold bg-indigo-900 bg-opacity-40 rounded-b-sm px-6 select-none z-20"
+        <span className="absolute text-emerald-100/65 text-xs font-semibold bg-indigo-900 bg-opacity-40 rounded-b-sm px-4 select-none z-20"
               style={{ top: '0%', left: '50%', transform: 'translateX(-50%)' }}>
-          ₹{getTotalBets('dragon').toLocaleString()}
+          {getTotalBets('dragon').toLocaleString()}
         </span>
         <div className="relative -inset-4 rounded-xl bg-gradient-to-br from-blue-700 to-sky-700 opacity-20 blur-lg pointer-events-none"></div>
         <div className="relative flex h-full w-full items-center justify-center rounded-xl bg-gradient-to-br from-blue-800 to-blue-800">
@@ -219,13 +200,13 @@ export default function BettingAreaWithBets({ timer, selectedChip }: BettingArea
 
       {/* Tiger betting area */}
       <div 
-        className="game-element rounded-xl border-black border-2 bg-gradient-to-br from-red-900 to-yellow-700 shadow-lg cursor-pointer select-none flex items-center justify-center hover:scale-105 transition-transform"
+        className="game-element rounded-xl border-black border-2 bg-gradient-to-br from-red-900 to-yellow-700 shadow-lg cursor-pointer select-none flex items-center justify-center"
         style={{ bottom: '10%', right: '13%', width: '37%', height: '27%', zIndex: 10 }}
         onClick={() => handleBetClick('tiger')}
       >
-        <span className="absolute text-emerald-100/65 text-sm font-bold bg-red-900 bg-opacity-40 rounded-b-sm px-6 select-none z-20"
+        <span className="absolute text-emerald-100/65 text-xs font-semibold bg-red-900 bg-opacity-40 rounded-b-sm px-4 select-none z-20"
               style={{ top: '0%', left: '50%', transform: 'translateX(-50%)' }}>
-          ₹{getTotalBets('tiger').toLocaleString()}
+          {getTotalBets('tiger').toLocaleString()}
         </span>
         <div className="relative -inset-4 rounded-xl bg-gradient-to-br from-red-700 to-yellow-700 opacity-20 blur-lg pointer-events-none"></div>
         <div className="relative flex h-full w-full items-center justify-center rounded-xl bg-gradient-to-br from-yellow-800 to-red-800">
