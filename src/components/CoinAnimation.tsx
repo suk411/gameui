@@ -69,8 +69,8 @@ export default function CoinAnimation({ amount, targetId, onComplete }: CoinAnim
         alt="Coin"
         className="coin-flying"
         style={{
-          width: "48px",
-          height: "48px",
+          width: "24px",
+          height: "24px",
           left: "50%",
           bottom: "80px",
           transform: "translateX(-50%)",

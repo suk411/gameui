@@ -11,7 +11,11 @@ interface BettingChipsProps {
   vertical?: boolean;
 }
 
-export default function BettingChips({ selectedChip, setSelectedChip, vertical }: BettingChipsProps) {
+export default function BettingChips({
+  selectedChip,
+  setSelectedChip,
+  vertical,
+}: BettingChipsProps) {
   const chips = [
     { id: 10, src: chip10, alt: "10" },
     { id: 50, src: chip50, alt: "50" },
@@ -21,23 +25,27 @@ export default function BettingChips({ selectedChip, setSelectedChip, vertical }
   ];
 
   return (
-    <>
-      
-      
-
-      <div className={vertical ? "flex flex-row gap-2 items-center" : "flex gap-5 justify-center flex-wrap mb-2 w-full"}>
-        {chips.map((chip) => (
-          <img
-            key={chip.id}
-            src={chip.src}
-            alt={chip.alt}
-            className={`w-9 h-9 object-contain rounded-full ${
-              selectedChip === chip.id ? "pulse-zoom" : ""
-            }`}
-            onClick={() => setSelectedChip(chip.id)}
-          />
-        ))}
-      </div>
-    </>
+    <div
+      className={
+        vertical
+          ? "flex flex-row gap-2 items-center"
+          : "flex gap-5 justify-center flex-wrap mb-2 w-full"
+      }
+    >
+      {chips.map((chip) => (
+        <img
+          key={chip.id}
+          src={chip.src}
+          alt={chip.alt}
+          className={`w-9 h-9 object-contain rounded-full transition duration-200 ease-in-out ${
+            selectedChip === chip.id
+              ? "border-2 border-yellow-400 shadow-[0_0_10px_2px_rgba(255,255,0,0.7)]"
+              : ""
+          }`}
+          onClick={() => setSelectedChip(chip.id)}
+        />
+      ))}
+    </div>
   );
 }
+

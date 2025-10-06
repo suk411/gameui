@@ -15,13 +15,13 @@ export default function UserBalance({ balance }: UserBalanceProps) {
         </div>
 
         {/* User balance display */}
-        <div className="text-white rounded-3xl border-2 border-[#5f5c07] select-none flex items-center justify-center text-sm font-bold px-4"
+        <div className="text-white rounded-3xl border-2 border-[#5f5c07] select-none flex items-center justify-center text-[15px] font-semibold px-4"
              style={{
                backgroundImage: `
-                 repeating-linear-gradient(45deg, rgba(255,255,255,0.06) 0, rgba(255,255,255,0.06) 1px, transparent 1px, transparent 20px),
+                 repeating-linear-gradient(45deg, rgba(255,255,255,0.06) 0, rgba(255,255,255,0.06) 1px, transparent 1px, transparent 10px),
                  repeating-linear-gradient(-45deg, rgba(255,255,255,0.06) 0, rgba(255,255,255,0.06) 1px, transparent 1px, transparent 20px)
                `,
-               backgroundSize: '20px 20px',
+               backgroundSize: '17px 17px',
                backgroundColor: '#000000',
              }}>
           {balance.toLocaleString()}
