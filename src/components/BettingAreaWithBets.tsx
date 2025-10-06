@@ -181,7 +181,7 @@ export default function BettingAreaWithBets({ timer, selectedChip }: BettingArea
       {/* Dragon betting area */}
       <div 
         className="game-element rounded-xl border-black border-2 bg-gradient-to-br from-indigo-900 to-blue-700 shadow-lg cursor-pointer select-none flex items-center justify-center z-10"
-        style={{ bottom: '10%', left: '7%', width: '40%', height: '27%' }}
+        style={{ bottom: '10%', left: '8%', width: '39%', height: '27%' }}
         onClick={() => handleBetClick('dragon')}
       >
         <span className="absolute text-emerald-100/65 text-xs font-semibold bg-indigo-900 bg-opacity-40 rounded-b-sm px-4 select-none z-20"
@@ -201,7 +201,7 @@ export default function BettingAreaWithBets({ timer, selectedChip }: BettingArea
       {/* Tiger betting area */}
       <div 
         className="game-element rounded-xl border-black border-2 bg-gradient-to-br from-red-900 to-yellow-700 shadow-lg cursor-pointer select-none flex items-center justify-center"
-        style={{ bottom: '10%', right: '7%', width: '40%', height: '27%', zIndex: 10 }}
+        style={{ bottom: '10%', right: '8%', width: '39%', height: '27%', zIndex: 10 }}
         onClick={() => handleBetClick('tiger')}
       >
         <span className="absolute text-emerald-100/65 text-xs font-semibold bg-red-900 bg-opacity-40 rounded-b-sm px-4 select-none z-20"
