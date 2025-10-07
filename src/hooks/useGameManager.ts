@@ -25,35 +25,31 @@ export function useGameManager() {
   const [balance, setBalance] = useState(951888);
   const [sessionId, setSessionId] = useState<string>("");
 
-  // Initialize or get session ID
+  // Initialize or get session ID from authenticated user
   useEffect(() => {
-    let sid = localStorage.getItem("dragon_tiger_session");
-    if (!sid) {
-      sid = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-      localStorage.setItem("dragon_tiger_session", sid);
-    }
-    setSessionId(sid);
+    const initSession = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (!user) {
+        console.log('No authenticated user');
+        return;
+      }
 
-    // Initialize player balance
-    const initBalance = async () => {
+      setSessionId(user.id);
+
+      // Get player balance
       const { data } = await supabase
         .from("player_balances")
         .select("balance")
-        .eq("session_id", sid)
+        .eq("session_id", user.id)
         .single();
 
       if (data) {
         setBalance(data.balance);
-      } else {
-        // Create new balance record
-        await supabase.from("player_balances").insert({
-          session_id: sid,
-          balance: 951888,
-        });
       }
     };
 
-    if (sid) initBalance();
+    initSession();
   }, []);
 
   // Subscribe to balance updates
@@ -159,32 +155,48 @@ export function useGameManager() {
     };
   }, [currentRound?.id]);
 
-  const placeBet = async (betType: string, amount: number) => {
-    if (!currentRound || !sessionId) return false;
+  const placeBet = async (betType: string, amount: number): Promise<boolean> => {
+    if (!currentRound || !sessionId) {
+      console.log('Cannot place bet: No round or session');
+      return false;
+    }
 
-    // Check if betting is still allowed
-    if (currentRound.status !== 'betting') return false;
+    // Check if betting is still allowed (only during betting phase)
+    if (currentRound.status !== 'betting') {
+      console.log('Cannot place bet: Betting phase is closed');
+      return false;
+    }
 
     // Check if user has enough balance
-    if (balance < amount) return false;
+    if (balance < amount) {
+      console.log('Cannot place bet: Insufficient balance');
+      return false;
+    }
 
-    // Deduct from balance first
-    const { error: balanceError } = await supabase
-      .from("player_balances")
-      .update({ balance: balance - amount })
-      .eq("session_id", sessionId);
+    try {
+      // Deduct from balance first
+      const { error: balanceError } = await supabase
+        .from("player_balances")
+        .update({ balance: balance - amount })
+        .eq("session_id", sessionId);
 
-    if (balanceError) return false;
+      if (balanceError) throw balanceError;
 
-    // Place bet
-    const { error: betError } = await supabase.from("bets").insert({
-      round_id: currentRound.id,
-      session_id: sessionId,
-      bet_type: betType,
-      amount: amount,
-    });
+      // Place bet
+      const { error: betError } = await supabase.from("bets").insert({
+        round_id: currentRound.id,
+        session_id: sessionId,
+        bet_type: betType,
+        amount: amount,
+      });
 
-    return !betError;
+      if (betError) throw betError;
+
+      return true;
+    } catch (error) {
+      console.error('Error placing bet:', error);
+      return false;
+    }
   };
 
   // Calculate total bets per type

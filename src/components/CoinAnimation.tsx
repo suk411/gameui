@@ -74,8 +74,14 @@ export default function CoinAnimation({ amount, targetId, onComplete }: CoinAnim
           left: "50%",
           bottom: "80px",
           transform: "translateX(-50%)",
-          "--tx": `calc(${targetId === "tie" ? "0px" : targetId === "dragon" ? "-100px" : "100px"})`,
-          "--ty": `calc(-${window.innerHeight * 0.3}px)`,
+          "--tx": `calc(${
+            targetId === "tie" 
+              ? "0px" 
+              : targetId === "dragon" 
+              ? `-${window.innerWidth * 0.35}px` 
+              : `${window.innerWidth * 0.35}px`
+          })`,
+          "--ty": `calc(-${window.innerHeight * 0.45}px)`,
         } as React.CSSProperties}
       />
     </>
