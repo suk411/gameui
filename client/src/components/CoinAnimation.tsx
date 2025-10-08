@@ -1,9 +1,4 @@
 import React, { useEffect, useState } from "react";
-import chip10 from "../assets/chip-10.png";
-import chip50 from "../assets/chip-50.png";
-import chip100 from "../assets/chip-100.png";
-import chip500 from "../assets/chip-500.png";
-import chip10k from "../assets/chip-10k.png";
 
 interface CoinAnimationProps {
   amount: number;
@@ -11,12 +6,12 @@ interface CoinAnimationProps {
   onComplete: () => void;
 }
 
-const CHIP_IMAGES = {
-  10: chip10,
-  50: chip50,
-  100: chip100,
-  500: chip500,
-  10000: chip10k,
+const CHIP_COLORS = {
+  10: { bg: '#3b82f6', border: '#1d4ed8' },
+  50: { bg: '#ef4444', border: '#991b1b' },
+  100: { bg: '#22c55e', border: '#15803d' },
+  500: { bg: '#eab308', border: '#854d0e' },
+  10000: { bg: '#8b5cf6', border: '#5b21b6' },
 };
 
 export default function CoinAnimation({ amount, targetId, onComplete }: CoinAnimationProps) {
@@ -51,12 +46,12 @@ export default function CoinAnimation({ amount, targetId, onComplete }: CoinAnim
 
   if (!isAnimating) return null;
 
-  // Select appropriate chip image based on amount
-  let chipSrc = chip10;
-  if (amount >= 10000) chipSrc = chip10k;
-  else if (amount >= 500) chipSrc = chip500;
-  else if (amount >= 100) chipSrc = chip100;
-  else if (amount >= 50) chipSrc = chip50;
+  // Select appropriate chip color based on amount
+  let chipColor = CHIP_COLORS[10];
+  if (amount >= 10000) chipColor = CHIP_COLORS[10000];
+  else if (amount >= 500) chipColor = CHIP_COLORS[500];
+  else if (amount >= 100) chipColor = CHIP_COLORS[100];
+  else if (amount >= 50) chipColor = CHIP_COLORS[50];
 
   return (
     <>
@@ -82,20 +77,30 @@ export default function CoinAnimation({ amount, targetId, onComplete }: CoinAnim
           animation: coinFly 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
       `}</style>
-      <img
-        src={chipSrc}
-        alt="Coin"
+      <div
         className="coin-flying"
         style={{
-          width: "24px",
-          height: "24px",
+          width: "32px",
+          height: "32px",
           left: "50%",
           bottom: "80px",
           transform: "translateX(-50%)",
           "--tx": `${targetPosition.x - window.innerWidth / 2}px`,
           "--ty": `${targetPosition.y - window.innerHeight + 80}px`,
+          backgroundColor: chipColor.bg,
+          border: `3px solid ${chipColor.border}`,
+          borderRadius: "50%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          color: "white",
+          fontWeight: "bold",
+          fontSize: "10px",
+          boxShadow: "0 2px 8px rgba(0,0,0,0.3)"
         } as React.CSSProperties}
-      />
+      >
+        {amount >= 1000 ? `${amount/1000}K` : amount}
+      </div>
     </>
   );
 }

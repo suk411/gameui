@@ -1,5 +1,3 @@
-import dragonBody from "../assets/dragon-body.png";
-import tigerBody from "../assets/tiger-body.png";
 import GameCards from "./cards";
 import CountdownTimer from "./CountdownTimer";
 import TrendSection from "./TrendSection";
@@ -149,24 +147,26 @@ export default function BettingAreaWithBets({ timer, selectedChip }: BettingArea
         />
       ))}
 
-      {/* Dragon animation on left */}
+      {/* Dragon on left */}
       <div className="creature-container animate-upDownImg"
            style={{ top:'3%', left: '5%' }}>
-        <img
-          src={dragonBody}
-          alt="Dragon"
-          style={{ width: '100%', height: 'auto' }}
-        />
+        <div style={{
+          fontSize: 'clamp(3rem, 8vw, 6rem)',
+          filter: 'drop-shadow(0 0 10px rgba(59, 130, 246, 0.5))'
+        }}>
+          🐉
+        </div>
       </div>
 
-      {/* Tiger animation on right with flame effects */}
+      {/* Tiger on right with flame effects */}
       <div className="creature-container animate-upDownImg"
            style={{ top:'3.7%', right: '5%' }}>
-        <img
-          src={tigerBody}
-          alt="Tiger"
-          style={{ width: '100%', height: 'auto' }}
-        />
+        <div style={{
+          fontSize: 'clamp(3rem, 8vw, 6rem)',
+          filter: 'drop-shadow(0 0 10px rgba(239, 68, 68, 0.5))'
+        }}>
+          🐅
+        </div>
         <div className="flame-container">
           <div className="flame-particle"></div>
           <div className="flame-particle"></div>

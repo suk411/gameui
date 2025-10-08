@@ -1,7 +1,4 @@
 import { useEffect, useState } from "react";
-import casinoTable from "../assets/image.png";
-import dragonBody from "../assets/dragon-body.png";
-import tigerBody from "../assets/tiger-body.png";
 import cardBack from "../assets/cards/card-back.svg";
 
 // Import all card SVGs - Hearts
@@ -74,7 +71,7 @@ export default function LoadingScreen({ onLoadComplete }: LoadingScreenProps) {
 
   useEffect(() => {
     const imagesToPreload = [
-      casinoTable, dragonBody, tigerBody, cardBack,
+      cardBack,
       // All 52 cards
       aceHearts, twoHearts, threeHearts, fourHearts, fiveHearts, sixHearts, sevenHearts, eightHearts, nineHearts, tenHearts, jackHearts, queenHearts, kingHearts,
       aceDiamonds, twoDiamonds, threeDiamonds, fourDiamonds, fiveDiamonds, sixDiamonds, sevenDiamonds, eightDiamonds, nineDiamonds, tenDiamonds, jackDiamonds, queenDiamonds, kingDiamonds,

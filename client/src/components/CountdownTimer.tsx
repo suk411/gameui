@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import clockIcon from "../assets/clock-icon.png";
+import { Clock } from "lucide-react";
 
 interface CountdownTimerProps {
   initial: number;
@@ -46,25 +46,26 @@ export default function CountdownTimer({ initial, onEnd, onPhaseChange }: Countd
   const seconds = time;
 
   return (
-    <div 
-      className="relative flex items-center justify-center" 
-      style={{ 
-        width: 'clamp(60px, 12vw, 100px)', 
-        height: 'clamp(60px, 12vw, 100px)' 
+    <div
+      className="relative flex items-center justify-center rounded-full bg-gradient-to-br from-amber-500 to-amber-700 shadow-lg"
+      style={{
+        width: 'clamp(60px, 12vw, 100px)',
+        height: 'clamp(60px, 12vw, 100px)',
+        border: '3px solid #92400e'
       }}
     >
-      <img
-        src={clockIcon}
-        alt="Clock"
-        className="absolute inset-0 w-full h-full"
+      <Clock
+        className="absolute text-amber-900/20"
+        size={parseInt('clamp(60px, 12vw, 100px)')}
+        strokeWidth={1}
       />
-      <div 
+      <div
         className={`
           absolute inset-0 flex items-center justify-center
           font-bold
           ${getTimerColor()}
         `}
-        style={{ 
+        style={{
           textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
           fontSize: 'clamp(1.5rem, 5vw, 2.5rem)'
         }}

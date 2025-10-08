@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import casinoTable from "../assets/image.png";
 import TopBar from "./TopBar";
 import BettingAreaWithBets from "./BettingAreaWithBets";
 import BottomBar from "./BottomBar";
@@ -49,7 +48,7 @@ export default function DragonTigerGame() {
             position: relative;
             width: 100%;
             height: 100%;
-            background-image: url(${casinoTable});
+            background-image: url('/casino-table-bg.svg');
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
