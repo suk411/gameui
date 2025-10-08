@@ -4,7 +4,6 @@ import TopBar from "./TopBar";
 import BettingAreaWithBets from "./BettingAreaWithBets";
 import BottomBar from "./BottomBar";
 import { useGameManager } from "@/hooks/useGameManager";
-import GameRoundManager from "./GameRoundManager";
 import { Toaster } from "@/components/ui/toaster";
 
 export default function DragonTigerGame() {
@@ -14,7 +13,6 @@ export default function DragonTigerGame() {
 
   return (
     <>
-      <GameRoundManager />
       <Toaster />
       <style>
         {`

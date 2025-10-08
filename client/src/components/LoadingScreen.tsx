@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
 import casinoTable from "../assets/image.png";
 import dragonBody from "../assets/dragon-body.png";
 import tigerBody from "../assets/tiger-body.png";
@@ -102,12 +101,11 @@ export default function LoadingScreen({ onLoadComplete }: LoadingScreenProps) {
     // Test server connection
     const testConnection = async () => {
       try {
-        const { data } = await supabase
-          .from("game_rounds")
-          .select("id")
-          .limit(1);
-        serverConnected = true;
-        setProgress(prev => Math.max(prev, 95));
+        const response = await fetch('/api/game-state');
+        if (response.ok) {
+          serverConnected = true;
+          setProgress(prev => Math.max(prev, 95));
+        }
       } catch (error) {
         console.error("Server connection test failed:", error);
       }
