@@ -99,7 +99,7 @@ interface CardProps {
 }
 
 function Card({ cardString, flipped, winner }: CardProps) {
-  const cardImage = getCardImage(cardString);
+  const cardImage = flipped && cardString ? getCardImage(cardString) : cardBack;
   
   return (
     <div className="card-wrapper">
@@ -108,7 +108,16 @@ function Card({ cardString, flipped, winner }: CardProps) {
           <img src={cardBack} alt="Card back" className="card-image" draggable="false" />
         </div>
         <div className="card-face card-front">
-          <img src={cardImage} alt={cardString || "Card"} className="card-image" draggable="false" />
+          <img 
+            src={cardImage} 
+            alt={cardString || "Card"} 
+            className="card-image" 
+            draggable="false"
+            onError={(e) => {
+              console.error("Failed to load card image:", cardString, cardImage);
+              e.currentTarget.src = cardBack;
+            }}
+          />
         </div>
       </div>
     </div>
@@ -158,9 +167,9 @@ function GameCards({ currentPhase, timeRemaining, dragonCard, tigerCard, roundWi
       <style>{`
         .card-wrapper {
           perspective: 1200px;
-          width: 63px;
-          height: 91px;
-          margin: 6px;
+          width: clamp(70px, 8vw, 90px);
+          height: clamp(100px, 12vw, 130px);
+          margin: 8px;
         }
         .card {
           position: relative;
