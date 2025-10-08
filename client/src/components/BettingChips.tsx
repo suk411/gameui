@@ -11,41 +11,47 @@ interface BettingChipsProps {
   vertical?: boolean;
 }
 
-export default function BettingChips({
-  selectedChip,
-  setSelectedChip,
-  vertical,
-}: BettingChipsProps) {
+export default function BettingChips({ selectedChip, setSelectedChip }: BettingChipsProps) {
   const chips = [
-    { id: 10, src: chip10, alt: "10" },
-    { id: 50, src: chip50, alt: "50" },
-    { id: 100, src: chip100, alt: "100" },
-    { id: 500, src: chip500, alt: "500" },
-    { id: 10000, src: chip10k, alt: "10k" },
+    { value: 10, image: chip10 },
+    { value: 50, image: chip50 },
+    { value: 100, image: chip100 },
+    { value: 500, image: chip500 },
+    { value: 10000, image: chip10k },
   ];
 
   return (
-    <div
-      className={
-        vertical
-          ? "flex flex-row gap-2 items-center"
-          : "flex gap-5 justify-center flex-wrap mb-2 w-full"
-      }
-    >
+    <div className="flex gap-2 sm:gap-3 md:gap-4 justify-center items-center py-2 px-2">
       {chips.map((chip) => (
-        <img
-          key={chip.id}
-          src={chip.src}
-          alt={chip.alt}
-          className={`w-9 h-9 object-contain rounded-full transition duration-200 ease-in-out ${
-            selectedChip === chip.id
-              ? "border-2 border-yellow-400 shadow-[0_0_10px_2px_rgba(255,255,0,0.7)]"
-              : ""
-          }`}
-          onClick={() => setSelectedChip(chip.id)}
-        />
+        <button
+          key={chip.value}
+          onClick={() => setSelectedChip(chip.value === selectedChip ? null : chip.value)}
+          className={`
+            relative transition-all duration-200 
+            hover:scale-110 active:scale-95
+            touch-manipulation
+            ${selectedChip === chip.value ? "scale-110 ring-2 sm:ring-4 ring-yellow-400" : ""}
+          `}
+          style={{
+            filter: selectedChip === chip.value
+              ? "drop-shadow(0 0 10px rgba(251, 191, 36, 0.8))"
+              : "drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3))",
+            minWidth: "clamp(2.5rem, 8vw, 3.5rem)",
+            minHeight: "clamp(2.5rem, 8vw, 3.5rem)",
+          }}
+          aria-label={`Select ${chip.value} chip`}
+        >
+          <img 
+            src={chip.image} 
+            alt={`${chip.value} chip`} 
+            className="w-full h-full object-contain"
+            style={{
+              width: "clamp(2.5rem, 8vw, 3.5rem)",
+              height: "clamp(2.5rem, 8vw, 3.5rem)",
+            }}
+          />
+        </button>
       ))}
     </div>
   );
 }
-

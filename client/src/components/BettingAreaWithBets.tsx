@@ -198,18 +198,30 @@ export default function BettingAreaWithBets({ timer, selectedChip }: BettingArea
       {/* Tie betting area */}
       <div 
         id="tie-betting-area"
-        className="game-element rounded-xl border-blue-400 border-4 bg-gradient-to-br from-emerald-900 to-teal-700 shadow-lg cursor-pointer select-none flex items-center justify-center z-10"
+        className="game-element rounded-xl border-blue-400 border-2 sm:border-4 bg-gradient-to-br from-emerald-900 to-teal-700 shadow-lg cursor-pointer select-none flex items-center justify-center z-10 touch-manipulation active:scale-95 transition-transform"
         style={{ bottom: '38%', left: '10%', width: '80%', height: '16%' }}
         onClick={() => handleBetClick('tie')}
+        role="button"
+        aria-label="Bet on Tie (10x payout)"
+        tabIndex={0}
       >
-        <span className="absolute text-emerald-100/65 text-xs font-semibold bg-green-700 bg-opacity-40 rounded-b-sm px-4 select-none z-20"
-              style={{ top: '0%', left: '50%', transform: 'translateX(-50%)' }}>
+        <span className="absolute text-emerald-100/65 font-semibold bg-green-700 bg-opacity-40 rounded-b-sm px-2 sm:px-4 select-none z-20"
+              style={{ 
+                top: '0%', 
+                left: '50%', 
+                transform: 'translateX(-50%)',
+                fontSize: 'clamp(0.625rem, 2vw, 0.875rem)'
+              }}>
           {getTotalBets('tie').toLocaleString()}
         </span>
         <div className="absolute -inset-4 rounded-xl bg-gradient-to-br from-emerald-700 to-cyan-700 opacity-20 blur-lg pointer-events-none"></div>
         <div className="relative flex h-full w-full items-center justify-center rounded-xl bg-gradient-to-br from-emerald-800 to-teal-800">
-          <span className="text-cyan-100 text-xl font-semibold tracking-wide"
-                style={{ textShadow: '0 2px 5px #0c4a6e', opacity: 0.5 }}>
+          <span className="text-cyan-100 font-semibold tracking-wide"
+                style={{ 
+                  textShadow: '0 2px 5px #0c4a6e', 
+                  opacity: 0.5,
+                  fontSize: 'clamp(1rem, 3vw, 1.5rem)'
+                }}>
             TIE x10
           </span>
         </div>
@@ -218,18 +230,30 @@ export default function BettingAreaWithBets({ timer, selectedChip }: BettingArea
       {/* Dragon betting area */}
       <div 
         id="dragon-betting-area"
-        className="game-element rounded-xl border-black border-2 bg-gradient-to-br from-indigo-900 to-blue-700 shadow-lg cursor-pointer select-none flex items-center justify-center z-10"
+        className="game-element rounded-xl border-black border-2 bg-gradient-to-br from-indigo-900 to-blue-700 shadow-lg cursor-pointer select-none flex items-center justify-center z-10 touch-manipulation active:scale-95 transition-transform"
         style={{ bottom: '13%', left: '9%', width: '39%', height: '24%' }}
         onClick={() => handleBetClick('dragon')}
+        role="button"
+        aria-label="Bet on Dragon (2x payout)"
+        tabIndex={0}
       >
-        <span className="absolute text-emerald-100/65 text-xs font-semibold bg-indigo-900 bg-opacity-40 rounded-b-sm px-4 select-none z-20"
-              style={{ top: '0%', left: '50%', transform: 'translateX(-50%)' }}>
+        <span className="absolute text-emerald-100/65 font-semibold bg-indigo-900 bg-opacity-40 rounded-b-sm px-2 sm:px-4 select-none z-20"
+              style={{ 
+                top: '0%', 
+                left: '50%', 
+                transform: 'translateX(-50%)',
+                fontSize: 'clamp(0.625rem, 2vw, 0.875rem)'
+              }}>
           {getTotalBets('dragon').toLocaleString()}
         </span>
         <div className="relative -inset-4 rounded-xl bg-gradient-to-br from-blue-700 to-sky-700 opacity-20 blur-lg pointer-events-none"></div>
         <div className="relative flex h-full w-full items-center justify-center rounded-xl bg-gradient-to-br from-blue-800 to-blue-800">
-          <span className="text-blue-500 text-lg font-semibold tracking-wide flex flex-col items-center"
-                style={{ opacity: 0.5, textShadow: '0 2px 0 black' }}>
+          <span className="text-blue-500 font-semibold tracking-wide flex flex-col items-center"
+                style={{ 
+                  opacity: 0.5, 
+                  textShadow: '0 2px 0 black',
+                  fontSize: 'clamp(0.875rem, 2.5vw, 1.25rem)'
+                }}>
             <span>DRAGON</span>
             <span>2x</span>
           </span>
@@ -239,18 +263,30 @@ export default function BettingAreaWithBets({ timer, selectedChip }: BettingArea
       {/* Tiger betting area */}
       <div 
         id="tiger-betting-area"
-        className="game-element rounded-xl border-black border-2 bg-gradient-to-br from-red-900 to-yellow-700 shadow-lg cursor-pointer select-none flex items-center justify-center"
+        className="game-element rounded-xl border-black border-2 bg-gradient-to-br from-red-900 to-yellow-700 shadow-lg cursor-pointer select-none flex items-center justify-center touch-manipulation active:scale-95 transition-transform"
         style={{ bottom: '13%', right: '9%', width: '39%', height: '24%', zIndex: 10 }}
         onClick={() => handleBetClick('tiger')}
+        role="button"
+        aria-label="Bet on Tiger (2x payout)"
+        tabIndex={0}
       >
-        <span className="absolute text-emerald-100/65 text-xs font-semibold bg-red-900 bg-opacity-40 rounded-b-sm px-4 select-none z-20"
-              style={{ top: '0%', left: '50%', transform: 'translateX(-50%)' }}>
+        <span className="absolute text-emerald-100/65 font-semibold bg-red-900 bg-opacity-40 rounded-b-sm px-2 sm:px-4 select-none z-20"
+              style={{ 
+                top: '0%', 
+                left: '50%', 
+                transform: 'translateX(-50%)',
+                fontSize: 'clamp(0.625rem, 2vw, 0.875rem)'
+              }}>
           {getTotalBets('tiger').toLocaleString()}
         </span>
         <div className="relative -inset-4 rounded-xl bg-gradient-to-br from-red-700 to-yellow-700 opacity-20 blur-lg pointer-events-none"></div>
         <div className="relative flex h-full w-full items-center justify-center rounded-xl bg-gradient-to-br from-yellow-800 to-red-800">
-          <span className="text-yellow-500 text-lg font-semibold tracking-wide flex flex-col items-center"
-                style={{ opacity: 0.5, textShadow: '0 2px 0 black' }}>
+          <span className="text-yellow-500 font-semibold tracking-wide flex flex-col items-center"
+                style={{ 
+                  opacity: 0.5, 
+                  textShadow: '0 2px 0 black',
+                  fontSize: 'clamp(0.875rem, 2.5vw, 1.25rem)'
+                }}>
             <span>TIGER</span>
             <span>2x</span>
           </span>

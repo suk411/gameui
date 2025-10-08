@@ -142,5 +142,67 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Ensure touch targets are at least 44x44px */
+  button, a, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Prevent text selection on game elements */
+  .game-element {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* High contrast focus indicators */
+  :focus-visible {
+    outline: 3px solid hsl(var(--gold));
+    outline-offset: 2px;
+  }
+}
+
+@layer utilities {
+  /* Responsive text utilities */
+  .text-responsive-xs {
+    font-size: clamp(0.75rem, 2vw, 0.875rem);
+  }
+
+  .text-responsive-sm {
+    font-size: clamp(0.875rem, 2.5vw, 1rem);
+  }
+
+  .text-responsive-base {
+    font-size: clamp(1rem, 3vw, 1.125rem);
+  }
+
+  .text-responsive-lg {
+    font-size: clamp(1.125rem, 3.5vw, 1.5rem);
+  }
+
+  .text-responsive-xl {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+  }
+
+  /* Touch-friendly utilities */
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Prevent double-tap zoom on mobile */
+  .no-double-tap-zoom {
+    touch-action: manipulation;
   }
 }

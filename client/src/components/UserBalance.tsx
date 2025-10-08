@@ -7,25 +7,17 @@ interface UserBalanceProps {
 
 export default function UserBalance({ balance }: UserBalanceProps) {
   return (
-    <div className="flex items-center justify-center w-full">
-      <div className="flex items-center gap-">
-        {/* User balance icon */}
-        <div className="text-[#ffe0da] rounded-lg bg-[#5f1e11] border-[#5b6612] border select-none p-1">
-          <MdCurrencyRupee size={13} />
-        </div>
-
-        {/* User balance display */}
-        <div className="text-white rounded-3xl border-2 border-[#5f5c07] select-none flex items-center justify-center text-[15px] font-semibold px-4"
-             style={{
-               backgroundImage: `
-                 repeating-linear-gradient(45deg, rgba(255,255,255,0.06) 0, rgba(255,255,255,0.06) 1px, transparent 1px, transparent 10px),
-                 repeating-linear-gradient(-45deg, rgba(255,255,255,0.06) 0, rgba(255,255,255,0.06) 1px, transparent 1px, transparent 20px)
-               `,
-               backgroundSize: '17px 17px',
-               backgroundColor: '#000000',
-             }}>
+    <div className="flex items-center gap-2 bg-gradient-to-r from-yellow-600 to-yellow-500 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg shadow-lg">
+      <div className="flex items-center gap-1">
+        <span className="text-yellow-100 font-bold text-base sm:text-lg md:text-xl">💰</span>
+        <span 
+          className="text-white font-bold"
+          style={{
+            fontSize: "clamp(0.875rem, 2.5vw, 1.125rem)",
+          }}
+        >
           {balance.toLocaleString()}
-        </div>
+        </span>
       </div>
     </div>
   );

@@ -35,22 +35,41 @@ export default function CountdownTimer({ initial, onEnd, onPhaseChange }: Countd
     }
   }, [time, isFifteen, onEnd]);
 
+  // Placeholder for getTimerColor, assuming it exists elsewhere or needs to be defined.
+  // For this example, we'll provide a basic implementation.
+  const getTimerColor = () => {
+    // Example: return 'text-red-500' or 'text-blue-500' based on some logic
+    return 'text-[#443001]'; // Defaulting to original color
+  };
+
+  // Placeholder for seconds, using the 'time' state variable.
+  const seconds = time;
+
   return (
-    <div className="flex  items-center justify-center select-none">
-      <div
-        className="relative flex items-center justify-center"
-        style={{ width: 65, height: 48 }}
+    <div 
+      className="relative flex items-center justify-center" 
+      style={{ 
+        width: 'clamp(60px, 12vw, 100px)', 
+        height: 'clamp(60px, 12vw, 100px)' 
+      }}
+    >
+      <img
+        src={clockIcon}
+        alt="Clock"
+        className="absolute inset-0 w-full h-full"
+      />
+      <div 
+        className={`
+          absolute inset-0 flex items-center justify-center
+          font-bold
+          ${getTimerColor()}
+        `}
+        style={{ 
+          textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
+          fontSize: 'clamp(1.5rem, 5vw, 2.5rem)'
+        }}
       >
-        <img
-          src={clockIcon}
-          alt="Clock"
-          style={{ width: 70, height: 48 }}
-        />
-        <span
-          className="absolute pl-[2px] pb-[2px] inset-0 flex items-end justify-center font-bold text-lg text-[#443001]"
-        >
-          {time}
-        </span>
+        {seconds}
       </div>
     </div>
   );
