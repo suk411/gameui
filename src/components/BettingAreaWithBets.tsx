@@ -17,7 +17,7 @@ export default function BettingAreaWithBets({ timer, selectedChip }: BettingArea
   const [currentPhase, setCurrentPhase] = useState<'betting' | 'revealing'>('betting');
   const [timeRemaining, setTimeRemaining] = useState(timer);
   const [animations, setAnimations] = useState<Array<{ id: string; targetId: string; amount: number }>>([]);
-  const { placeBet, getTotalBets, balance } = useGameManager();
+  const { placeBet, getTotalBets, balance, currentRound } = useGameManager();
   const { toast } = useToast();
 
   const handlePhaseChange = (phase: 'betting' | 'revealing', time: number) => {
@@ -186,11 +186,18 @@ export default function BettingAreaWithBets({ timer, selectedChip }: BettingArea
 
       {/* Cards */}
       <div className="absolute left-1/2" style={{ top: '15%', transform: 'translateX(-50%)' }}>
-        <GameCards currentPhase={currentPhase} timeRemaining={timeRemaining} />
+        <GameCards 
+          currentPhase={currentPhase} 
+          timeRemaining={timeRemaining}
+          dragonCard={currentRound?.dragon_card || null}
+          tigerCard={currentRound?.tiger_card || null}
+          roundWinner={currentRound?.winner || null}
+        />
       </div>
 
       {/* Tie betting area */}
       <div 
+        id="tie-betting-area"
         className="game-element rounded-xl border-blue-400 border-4 bg-gradient-to-br from-emerald-900 to-teal-700 shadow-lg cursor-pointer select-none flex items-center justify-center z-10"
         style={{ bottom: '38%', left: '10%', width: '80%', height: '16%' }}
         onClick={() => handleBetClick('tie')}
@@ -210,6 +217,7 @@ export default function BettingAreaWithBets({ timer, selectedChip }: BettingArea
 
       {/* Dragon betting area */}
       <div 
+        id="dragon-betting-area"
         className="game-element rounded-xl border-black border-2 bg-gradient-to-br from-indigo-900 to-blue-700 shadow-lg cursor-pointer select-none flex items-center justify-center z-10"
         style={{ bottom: '13%', left: '9%', width: '39%', height: '24%' }}
         onClick={() => handleBetClick('dragon')}
@@ -230,6 +238,7 @@ export default function BettingAreaWithBets({ timer, selectedChip }: BettingArea
 
       {/* Tiger betting area */}
       <div 
+        id="tiger-betting-area"
         className="game-element rounded-xl border-black border-2 bg-gradient-to-br from-red-900 to-yellow-700 shadow-lg cursor-pointer select-none flex items-center justify-center"
         style={{ bottom: '13%', right: '9%', width: '39%', height: '24%', zIndex: 10 }}
         onClick={() => handleBetClick('tiger')}

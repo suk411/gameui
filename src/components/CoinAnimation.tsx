@@ -21,15 +21,33 @@ const CHIP_IMAGES = {
 
 export default function CoinAnimation({ amount, targetId, onComplete }: CoinAnimationProps) {
   const [isAnimating, setIsAnimating] = useState(true);
+  const [targetPosition, setTargetPosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
+    // Map targetId to actual betting area elements
+    const targetMap: Record<string, string> = {
+      'dragon': 'dragon-betting-area',
+      'tiger': 'tiger-betting-area',
+      'tie': 'tie-betting-area'
+    };
+    
+    const actualTargetId = targetMap[targetId] || targetId;
+    const targetElement = document.getElementById(actualTargetId);
+    
+    if (targetElement) {
+      const targetRect = targetElement.getBoundingClientRect();
+      const centerX = targetRect.left + targetRect.width / 2;
+      const centerY = targetRect.top + targetRect.height / 2;
+      setTargetPosition({ x: centerX, y: centerY });
+    }
+
     const timer = setTimeout(() => {
       setIsAnimating(false);
       onComplete();
     }, 800);
 
     return () => clearTimeout(timer);
-  }, [onComplete]);
+  }, [onComplete, targetId]);
 
   if (!isAnimating) return null;
 
@@ -74,14 +92,8 @@ export default function CoinAnimation({ amount, targetId, onComplete }: CoinAnim
           left: "50%",
           bottom: "80px",
           transform: "translateX(-50%)",
-          "--tx": `calc(${
-            targetId === "tie" 
-              ? "0px" 
-              : targetId === "dragon" 
-              ? `-${window.innerWidth * 0.35}px` 
-              : `${window.innerWidth * 0.35}px`
-          })`,
-          "--ty": `calc(-${window.innerHeight * 0.45}px)`,
+          "--tx": `${targetPosition.x - window.innerWidth / 2}px`,
+          "--ty": `${targetPosition.y - window.innerHeight + 80}px`,
         } as React.CSSProperties}
       />
     </>

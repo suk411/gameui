@@ -1,36 +1,66 @@
 import React, { useState, useEffect } from "react";
 import cardBack from "../assets/cards/card-back.svg";
 
-const CARD_VALUES = [1,2,3,4,5,6,7,8,9,10,11,12,13];
-const SUITS = [
-  { name: "spades", symbol: "♠", color: "black" },
-  { name: "hearts", symbol: "♥", color: "red" },
-  { name: "clubs", symbol: "♣", color: "black" },
-  { name: "diamonds", symbol: "♦", color: "red" }
-];
+// Import all card SVGs directly
+import aceHearts from "../assets/cards/ace-hearts.svg";
+import aceDiamonds from "../assets/cards/ace-diamonds.svg";
+import aceClubs from "../assets/cards/ace-clubs.svg";
+import aceSpades from "../assets/cards/ace-spades.svg";
+import twoHearts from "../assets/cards/2-hearts.svg";
+import twoSpades from "../assets/cards/2-spades.svg";
+import threeDiamonds from "../assets/cards/3-diamonds.svg";
+import fourClubs from "../assets/cards/4-clubs.svg";
+import fiveHearts from "../assets/cards/5-hearts.svg";
+import sixSpades from "../assets/cards/6-spades.svg";
+import sevenClubs from "../assets/cards/7-clubs.svg";
+import eightDiamonds from "../assets/cards/8-diamonds.svg";
+import nineHearts from "../assets/cards/9-hearts.svg";
+import tenDiamonds from "../assets/cards/10-diamonds.svg";
+import jackClubs from "../assets/cards/jack-clubs.svg";
+import jackSpades from "../assets/cards/jack-spades.svg";
+import queenDiamonds from "../assets/cards/queen-diamonds.svg";
+import queenHearts from "../assets/cards/queen-hearts.svg";
+import kingSpades from "../assets/cards/king-spades.svg";
 
-function randomCard() {
-  return {
-    value: CARD_VALUES[Math.floor(Math.random() * CARD_VALUES.length)],
-    suit: SUITS[Math.floor(Math.random() * SUITS.length)]
-  };
-}
+// Card mapping object
+const CARD_IMAGES: Record<string, string> = {
+  "ace-hearts": aceHearts,
+  "ace-diamonds": aceDiamonds,
+  "ace-clubs": aceClubs,
+  "ace-spades": aceSpades,
+  "2-hearts": twoHearts,
+  "2-spades": twoSpades,
+  "3-diamonds": threeDiamonds,
+  "4-clubs": fourClubs,
+  "5-hearts": fiveHearts,
+  "6-spades": sixSpades,
+  "7-clubs": sevenClubs,
+  "8-diamonds": eightDiamonds,
+  "9-hearts": nineHearts,
+  "10-diamonds": tenDiamonds,
+  "jack-clubs": jackClubs,
+  "jack-spades": jackSpades,
+  "queen-diamonds": queenDiamonds,
+  "queen-hearts": queenHearts,
+  "king-spades": kingSpades,
+};
 
-function getCardImage(value: number, suit: { name: string }) {
-  const valueNames = { 1: "ace", 11: "jack", 12: "queen", 13: "king" };
-  const cardName = valueNames[value as keyof typeof valueNames] || value.toString();
-  return new URL(`../assets/cards/${cardName}-${suit.name}.svg`, import.meta.url).href;
+function getCardImage(cardString: string | null): string {
+  if (!cardString) return cardBack;
+  
+  // cardString format: "5-hearts", "ace-spades", etc.
+  const cardKey = cardString.toLowerCase();
+  return CARD_IMAGES[cardKey] || cardBack;
 }
 
 interface CardProps {
-  value: number;
-  suit: { name: string; symbol: string; color: string };
+  cardString: string | null;
   flipped: boolean;
   winner: boolean;
 }
 
-function Card({ value, suit, flipped, winner }: CardProps) {
-  const cardImage = getCardImage(value, suit);
+function Card({ cardString, flipped, winner }: CardProps) {
+  const cardImage = getCardImage(cardString);
   
   return (
     <div className="card-wrapper">
@@ -39,7 +69,7 @@ function Card({ value, suit, flipped, winner }: CardProps) {
           <img src={cardBack} alt="Card back" className="card-image" draggable="false" />
         </div>
         <div className="card-face card-front">
-          <img src={cardImage} alt={`${value} of ${suit.name}`} className="card-image" draggable="false" />
+          <img src={cardImage} alt={cardString || "Card"} className="card-image" draggable="false" />
         </div>
       </div>
     </div>
@@ -49,10 +79,12 @@ function Card({ value, suit, flipped, winner }: CardProps) {
 interface GameCardsProps {
   currentPhase: 'betting' | 'revealing';
   timeRemaining: number;
+  dragonCard: string | null;
+  tigerCard: string | null;
+  roundWinner: string | null;
 }
 
-function GameCards({ currentPhase, timeRemaining }: GameCardsProps) {
-  const [cards, setCards] = useState([randomCard(), randomCard()]);
+function GameCards({ currentPhase, timeRemaining, dragonCard, tigerCard, roundWinner }: GameCardsProps) {
   const [flipped, setFlipped] = useState([false, false]);
   const [winner, setWinner] = useState<number | null>(null);
 
@@ -61,32 +93,26 @@ function GameCards({ currentPhase, timeRemaining }: GameCardsProps) {
       // Betting phase (15 seconds): cards stay face down
       setFlipped([false, false]);
       setWinner(null);
-      // Generate new cards for next round
-      if (timeRemaining === 15) {
-        const card1 = randomCard();
-        const card2 = randomCard();
-        setCards([card1, card2]);
-      }
     } else if (currentPhase === 'revealing') {
       // Result phase (10 seconds total)
       if (timeRemaining <= 10 && timeRemaining > 7) {
-        // First 3 seconds (10-7s): flip first card
+        // First 3 seconds (10-7s): flip first card (dragon)
         setFlipped([true, false]);
         setWinner(null);
       } else if (timeRemaining <= 7 && timeRemaining > 2) {
-        // Next 5 seconds (7-2s): flip second card and show winner effects
+        // Next 5 seconds (7-2s): flip second card (tiger) and show winner
         setFlipped([true, true]);
-        // Determine and show winner
-        if (cards[0].value > cards[1].value) setWinner(0);
-        else if (cards[1].value > cards[0].value) setWinner(1);
+        // Determine winner from server data
+        if (roundWinner === 'dragon') setWinner(0);
+        else if (roundWinner === 'tiger') setWinner(1);
         else setWinner(null); // tie
       } else if (timeRemaining <= 2) {
-        // Last 2 seconds (2-0s): flip cards back to rest position
+        // Last 2 seconds (2-0s): flip cards back
         setFlipped([false, false]);
         setWinner(null);
       }
     }
-  }, [currentPhase, timeRemaining]);
+  }, [currentPhase, timeRemaining, roundWinner]);
 
   return (
     <>
@@ -140,8 +166,8 @@ function GameCards({ currentPhase, timeRemaining }: GameCardsProps) {
         }
       `}</style>
       <div className="flex gap-24 justify-center items-center bg-transparent">
-        <Card value={cards[0].value} suit={cards[0].suit} flipped={flipped[0]} winner={winner === 0} />
-        <Card value={cards[1].value} suit={cards[1].suit} flipped={flipped[1]} winner={winner === 1} />
+        <Card cardString={dragonCard} flipped={flipped[0]} winner={winner === 0} />
+        <Card cardString={tigerCard} flipped={flipped[1]} winner={winner === 1} />
       </div>
     </>
   );
